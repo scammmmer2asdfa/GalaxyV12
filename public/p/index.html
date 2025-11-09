@@ -3,16 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../assets/styles/browser.css" />
     <script src="../scram/scramjet.all.js"></script>
-    <script src="../assets/js/mainAnimation.js"></script>
+    <script defer src="../assets/js/browser.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/adc83d139e.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Galaxy Browser</title>
   </head>
-  <body>
-    <input id="rogoisdabest" placeholder="search" class="search" />
-    <iframe id="frame" class="w-full h-screen border-0"></iframe>
+  <body id="body">
+    <div id="nav">
+      <div id="tabGroup"></div>
+      <div id="plusdiv" onclick="newTab()">
+        <p class="plus">+</p>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="goBack toolbarBtn" id="goBack">
+        <i class="fa-solid fa-arrow-left"></i>
+      </div>
+      <div class="goForward toolbarBtn" id="goForward">
+        <i class="fa-solid fa-arrow-right"></i>
+      </div>
+      <div class="reload toolbarBtn" id="reload">
+        <i class="fa-solid fa-rotate-right"></i>
+      </div>
+      <input id="rogoisdabest" placeholder="search" class="search" />
+      <div class="more toolbarBtn" id="more">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </div>
+    </div>
+
     <script type="module">
-      // --- LITHIUM IMPORTS ---
       import {
         setTransport,
         setWisp,
@@ -20,12 +45,7 @@
         getProxied,
       } from "../lithium.mjs";
 
-      let protocol;
-      if (location.protocol === "https:") {
-        protocol = "wss://";
-      } else {
-        protocol = "ws://";
-      }
+      let protocol = location.protocol === "https:" ? "wss://" : "ws://";
       const host = location.host;
       setWisp(`${protocol}${host}/wisp/`);
       setTransport("epoxy");
@@ -33,9 +53,14 @@
       const input = document.getElementById("rogoisdabest");
       input.addEventListener("keyup", async (e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
+          const tabNumber = activeTabId.replace("tab", "");
+          const iframe = document.getElementById("frame" + tabNumber);
           const url = await getProxied(makeURL(input.value));
-          document.getElementById("frame").src = url;
-          console.log("Loading URL:", url);
+          iframe.src = url;
+          input.value = getOriginalUrl(iframe.src);
+          console.log("Loading URL in", iframe.id, ":", url);
+          let tabName = document.querySelector(".tabName");
+          tabName.textContent = getWebsiteName(input.value);
         }
       });
     </script>
