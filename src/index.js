@@ -18,7 +18,7 @@ const publicDir = path.join(__dirname, "..", "public");
 
 // Environment variables with fallbacks
 // Note: Using 0.0.0.0 instead of localhost makes it accessible on LAN
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 4040;
 const HOST = process.env.HOST || "0.0.0.0";
 const NODE_ENV = process.env.NODE_ENV || "production";
 
