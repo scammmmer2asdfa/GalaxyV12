@@ -62,7 +62,7 @@ body {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   height: 35px;
-  width: 163px;
+  width: 50px;
   background-color: rgba(0, 0, 0, 0.39);
   display: flex;
   flex-direction: row;
@@ -75,6 +75,20 @@ body {
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
 }
+@keyframes openTab {
+  to {
+    width: 163px;
+  }
+}
+@keyframes closeTab {
+  from {
+    width: 163px;
+  }
+  to {
+    width: 0px;
+  }
+}
+
 .tab.active {
   background-color: rgb(60, 60, 60);
 }
@@ -100,22 +114,22 @@ body {
   cursor: pointer;
 }
 #plusdiv {
-  height: 35px;
-  width: 35px;
+  height: 30px;
+  width: 30px;
   text-align: center;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   padding: 0px;
   margin-top: 10px;
-  border-radius: 5px;
+  border-radius: 100px;
 }
 #plusdiv:hover {
   background-color: #66666667;
 }
 .plus {
   font-weight: 1000;
-  font-size: 24px;
+  font-size: 25px;
   font-family: aovel;
   margin: 0px;
   cursor: pointer;

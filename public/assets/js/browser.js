@@ -42,37 +42,46 @@ function newTab() {
     <p class="close">&#xEF2C</p>`;
 
   nav.appendChild(tab);
+  tab.style.animation = "openTab 0.2s  forwards";
   body.appendChild(iframe);
 
   tab.addEventListener("click", () => setActiveTab(tab));
   const closeBtn = tab.querySelector(".close");
   closeBtn.addEventListener("click", (e) => {
+    tab.style.animation = "closeTab 0.1s ";
     tabNumber--;
-    e.stopPropagation();
-    tab.remove();
-    divider.remove();
-    iframe.remove();
-    input.value = "";
-    if (activeTabId === tab.id) {
-      //I'm lwk so smart
-      const remainingTabs = document.querySelectorAll(".tab");
-      if (remainingTabs.length > 0)
-        setActiveTab(remainingTabs[remainingTabs.length - 1]);
-    }
-  });
-  tab.addEventListener("mouseup", (e) => {
-    if (e.button === 1) {
-      tabNumber--;
+    tab.addEventListener("animationend", () => {
       e.stopPropagation();
       tab.remove();
       divider.remove();
       iframe.remove();
       input.value = "";
       if (activeTabId === tab.id) {
+        //I'm lwk so smart
         const remainingTabs = document.querySelectorAll(".tab");
         if (remainingTabs.length > 0)
           setActiveTab(remainingTabs[remainingTabs.length - 1]);
       }
+    });
+  });
+  tab.addEventListener("mouseup", (e) => {
+    if (e.button === 1) {
+      tab.style.animation = "closeTab 0.1s ";
+      tabNumber--;
+
+      tab.addEventListener("animationend", () => {
+        e.stopPropagation();
+        tab.remove();
+        divider.remove();
+        iframe.remove();
+        input.value = "";
+        if (activeTabId === tab.id) {
+          //I'm lwk so smart
+          const remainingTabs = document.querySelectorAll(".tab");
+          if (remainingTabs.length > 0)
+            setActiveTab(remainingTabs[remainingTabs.length - 1]);
+        }
+      });
     }
   });
   tabCount++;
@@ -136,21 +145,21 @@ function getOriginalUrl(url) {
     return url;
   }
 }
-  function getWebsiteName(url) {
-    try {
-      if (!url || (!url.startsWith("http://") && !url.startsWith("https://"))) {
-        return url;
-      }
-      
-      const urlObj = new URL(url);
-      let hostname = urlObj.hostname;
-      
-      if (hostname.startsWith('www.')) {
-        hostname = hostname.substring(4);
-      }
-      
-      return hostname;
-    } catch (e) {
-      return url.length > 20 ? url.substring(0, 20) + '...' : url;
+function getWebsiteName(url) {
+  try {
+    if (!url || (!url.startsWith("http://") && !url.startsWith("https://"))) {
+      return url;
     }
+
+    const urlObj = new URL(url);
+    let hostname = urlObj.hostname;
+
+    if (hostname.startsWith("www.")) {
+      hostname = hostname.substring(4);
+    }
+
+    return hostname;
+  } catch (e) {
+    return url.length > 20 ? url.substring(0, 20) + "..." : url;
   }
+}
