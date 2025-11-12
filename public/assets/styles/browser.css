@@ -13,6 +13,7 @@ body {
   margin: 0px;
   display: flex;
   flex-direction: column;
+  background-color: #000000;
 }
 @font-face {
   font-family: fabrica;

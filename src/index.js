@@ -1,69 +1,48 @@
+import express from "express";
 import { createServer } from "node:http";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
 import { hostname } from "node:os";
-import wisp from "wisp-server-node";
-import Fastify from "fastify";
-import fastifyStatic from "@fastify/static";
 import { fileURLToPath } from "node:url";
-import path from "node:path";
-
-// UV and proxy dependencies
+import wisp from "wisp-server-node";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
+import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
+import serveStatic from "serve-static";
 
-// Resolve directory paths for ESM
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const publicDir = path.join(__dirname, "..", "public");
+const __dirname = dirname(__filename);
+const publicDir = join(__dirname, "..", "public");
 
-// Environment variables with fallbacks
-// Note: Using 0.0.0.0 instead of localhost makes it accessible on LAN
 const PORT = process.env.PORT || 4040;
 const HOST = process.env.HOST || "0.0.0.0";
 const NODE_ENV = process.env.NODE_ENV || "production";
 
-// Create Fastify instance with custom server factory
-// This is needed to handle both HTTP requests and WebSocket upgrades
-const fastify = Fastify({
-  serverFactory: (handler) => {
-    return createServer()
-      .on("request", (req, res) => {
-        // These headers enable SharedArrayBuffer and cross-origin isolation
-        // Required for some web APIs to work properly through the proxy
-        res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-        res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-        handler(req, res);
-      })
-      .on("upgrade", (req, socket, head) => {
-        // Handle WebSocket upgrades for WISP protocol
-        // FIXME: Sometimes connections drop after ~30 seconds - investigate
-        if (req.url.endsWith("/wisp/")) wisp.routeRequest(req, socket, head);
-        else socket.end();
-      });
-  },
-  // Only enable logging in development mode to keep production logs clean
-  logger: NODE_ENV === "development",
+const app = express();
+
+// Set COOP/COEP headers
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  next();
+});
+app.use("/uv/", express.static(uvPath));
+
+// Serve static files
+app.use("/", serveStatic(publicDir));
+app.use("/epoxy", serveStatic(epoxyPath));
+app.use("/baremux", serveStatic(baremuxPath));
+
+// Route: index.html
+app.get("/", (req, res) => {
+  res.sendFile("index.html", { root: publicDir });
 });
 
-// Serve static files from public directory
-fastify.register(fastifyStatic, {
-  root: publicDir,
-  prefix: "/",
-  decorateReply: true,
-});
-
-// Main route - serves our browser interface
-fastify.get("/", (req, reply) => {
-  return reply.sendFile("index.html", publicDir);
-});
-
-fastify.get("/favicon-proxy", async (req, reply) => {
+// Route: favicon proxy
+app.get("/favicon-proxy", async (req, res) => {
   try {
     const { url } = req.query;
-
-    if (!url) {
-      return reply.code(400).send({ error: "URL parameter is required" });
-    }
+    if (!url)
+      return res.status(400).json({ error: "URL parameter is required" });
 
     const validServices = [
       "www.google.com/s2/favicons",
@@ -78,9 +57,8 @@ fastify.get("/favicon-proxy", async (req, reply) => {
           service.split("/")[0] || urlObj.href.includes(service)
     );
 
-    if (!isValidService) {
-      return reply.code(403).send({ error: "Invalid favicon service" });
-    }
+    if (!isValidService)
+      return res.status(403).json({ error: "Invalid favicon service" });
 
     const response = await fetch(url, {
       headers: {
@@ -91,67 +69,53 @@ fastify.get("/favicon-proxy", async (req, reply) => {
     });
 
     if (!response.ok) {
-      return reply
-        .code(response.status)
-        .send({ error: "Failed to fetch favicon" });
+      return res
+        .status(response.status)
+        .json({ error: "Failed to fetch favicon" });
     }
 
     const contentType = response.headers.get("content-type") || "image/x-icon";
     const imageBuffer = await response.arrayBuffer();
 
-    reply.header("Content-Type", contentType);
-    reply.header("Cache-Control", "public, max-age=86400");
-    reply.header("Access-Control-Allow-Origin", "*");
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Cache-Control", "public, max-age=86400");
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
-    return reply.send(Buffer.from(imageBuffer));
+    return res.send(Buffer.from(imageBuffer));
   } catch (error) {
     console.error("Favicon proxy error:", error);
-    return reply.code(500).send({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
-// Epoxy transport (encrypted proxy data)
-fastify.register(fastifyStatic, {
-  root: epoxyPath,
-  prefix: "/epoxy/",
-  decorateReply: false,
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal Server Error" });
 });
 
-// Baremux client scripts
-fastify.register(fastifyStatic, {
-  root: baremuxPath,
-  prefix: "/baremux/",
-  decorateReply: false,
-});
+// Create HTTP server with upgrade handling
+const server = createServer(app);
 
-// Custom error handler to prevent leaking stack traces in production
-fastify.setErrorHandler((error, request, reply) => {
-  fastify.log.error(error);
-  reply.status(500).send({ error: "Internal Server Error" });
-});
-
-// Graceful shutdown handler
-// This ensures we close all connections properly when terminating
-async function shutdown() {
-  try {
-    await fastify.close();
-    process.exit(0);
-  } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
+server.on("upgrade", (req, socket, head) => {
+  if (req.url.endsWith("/wisp/")) {
+    wisp.routeRequest(req, socket, head);
+  } else {
+    socket.end();
   }
+});
+
+// Graceful shutdown
+function shutdown() {
+  server.close(() => process.exit(0));
 }
 
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
 
-fastify.listen({ port: PORT, host: HOST }, (err) => {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-
-  const address = fastify.server.address();
+// Start server
+server.listen(PORT, HOST, () => {
+  const address = server.address();
   console.log(`Server running in ${NODE_ENV} mode`);
   console.log(`Listening on:`);
   console.log(`\thttp://localhost:${address.port}`);

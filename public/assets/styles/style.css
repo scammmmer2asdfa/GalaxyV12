@@ -1,8 +1,9 @@
 :root {
-  --backgroundURL: url("assets/img/black.jpg");
+  --backgroundURL: url("../img/black.jpg");
 }
 body {
   background-image: var(--backgroundURL);
+  background-color: #000000;
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -14,19 +15,19 @@ body {
 }
 @font-face {
   font-family: fabrica;
-  src: url(../assets/fonts/fabrica-font/Fabrica-ZOjx.otf) format("woff2");
+  src: url(/assets/fonts/fabrica-font/Fabrica-ZOjx.otf) format("woff2");
 }
 @font-face {
   font-family: gravity;
-  src: url(../assets/fonts/gravity-font/GravityLight-66Ro.otf) format("woff2");
+  src: url(/assets/fonts/gravity-font/GravityLight-66Ro.otf) format("woff2");
 }
 @font-face {
   font-family: nunito;
-  src: url(../assets/fonts/nunito-font/NunitoExtralight-YzEeq.ttf);
+  src: url(/assets/fonts/nunito-font/NunitoExtralight-YzEeq.ttf);
 }
 @font-face {
   font-family: royalCrescent;
-  src: url(../assets/fonts/royal-crescent-font/RoyalCrescent-G8BP.ttf);
+  src: url(/assets/fonts/royal-crescent-font/RoyalCrescent-G8BP.ttf);
 }
 
 /*--------------------------------*/
