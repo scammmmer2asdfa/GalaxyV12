@@ -1,3 +1,16 @@
-<html onclick="x()">
-  <iframe src="https://falconon.top/" frameborder="0"></iframe>
+<html>
+  <body>
+    <iframe src="/" id="i"></iframe>
+    <script>
+      const iframe = document.getElementById("i");
+      function q() {
+        console.log("iframe loaded!");
+        console.log("contentDocument:", iframe.contentDocument);
+        console.log("URL:", iframe.contentWindow.location.href);
+        let y = console.log("Title:", iframe.contentDocument?.title);
+        console.log(y);
+      }
+      
+    </script>
+  </body>
 </html>

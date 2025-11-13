@@ -3,7 +3,7 @@ const body = document.getElementById("body");
 let tabCount = 1;
 let tabNumber = 0;
 let activeTabId = null;
-const input = document.getElementById("rogoisdabest");
+let input = document.getElementById("rogoisdabest");
 
 function setActiveTab(tab) {
   //BIG BRAIN MOMENT OHHHHHHHHHHH
@@ -64,7 +64,7 @@ function newTab() {
       }
     });
   });
-  tab.addEventListener("mouseup", (e) => {
+  tab.addEventListener("mousedown", (e) => {
     if (e.button === 1) {
       tab.style.animation = "closeTab 0.1s ";
       tabNumber--;
@@ -90,36 +90,6 @@ function newTab() {
 
 newTab();
 
-const back = document.getElementById("goBack");
-const forward = document.getElementById("goForward");
-const reload = document.getElementById("reload");
-const more = document.getElementById("more");
-const iframe = document.getElementById("frame" + activeTabId);
-reload.addEventListener("click", () => {
-  const iframe = document.getElementById(
-    "frame" + activeTabId.replace("tab", "")
-  );
-  iframe.contentWindow.location.reload();
-  input.value = getOriginalUrl(iframe.src);
-});
-
-forward.addEventListener("click", () => {
-  const iframe = document.getElementById(
-    "frame" + activeTabId.replace("tab", "")
-  );
-  iframe.contentWindow.history.forward();
-});
-
-back.addEventListener("click", () => {
-  const iframe = document.getElementById(
-    "frame" + activeTabId.replace("tab", "")
-  );
-  iframe.contentWindow.history.back();
-});
-
-more.addEventListener("click", () => {
-  console.log("clicked!");
-});
 function getOriginalUrl(url) {
   if (!url) return "";
 
