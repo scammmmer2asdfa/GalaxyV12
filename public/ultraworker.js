@@ -12,14 +12,15 @@ if (navigator.userAgent.includes("Firefox")) {
 
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 const scramjet = new ScramjetServiceWorker();
+const sw = new UVServiceWorker();
 
 self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
 async function handleRequest(event) {
-  if (uv.route(event)) {
-    return await uv.fetch(event);
+  if (sw.route(event)) {
+    return sw.fetch(event);
   }
 
   await scramjet.loadConfig();

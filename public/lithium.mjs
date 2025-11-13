@@ -18,29 +18,31 @@ export let currentFrame;
 export const addressInput = document.getElementById("address");
 
 requestIdleCallback(async () => {
-await import(`/scram/scramjet.all.js`);
+  await import(`/scram/scramjet.all.js`);
 
-const { ScramjetController } = window.$scramjetLoadController();
+  const { ScramjetController } = window.$scramjetLoadController();
 
-const scramjet = new ScramjetController({
-	files: {
-		wasm: `/scram/scramjet.wasm.wasm`,
-		all: `/scram/scramjet.all.js`,
-		sync: `/scram/scramjet.sync.js`,
-	},
-	siteFlags: {
-		"https://www.google.com/(search|sorry).*": {
-			naiiveRewriter: true,
-		},
-	},
-});
+  const scramjet = new ScramjetController({
+    files: {
+      wasm: `/scram/scramjet.wasm.wasm`,
+      all: `/scram/scramjet.all.js`,
+      sync: `/scram/scramjet.sync.js`,
+    },
+    siteFlags: {
+      "https://www.google.com/(search|sorry).*": {
+        naiiveRewriter: true,
+      },
+    },
+  });
 
-scramjet.init();
-window.scramjet = scramjet;
+  scramjet.init();
+  window.scramjet = scramjet;
 });
 const transportOptions = {
-	epoxy: "https://unpkg.com/@mercuryworkshop/epoxy-transport@2.1.27/dist/index.mjs",
-	libcurl: "https://unpkg.com/@mercuryworkshop/libcurl-transport@1.5.0/dist/index.mjs",
+  epoxy:
+    "https://unpkg.com/@mercuryworkshop/epoxy-transport@2.1.27/dist/index.mjs",
+  libcurl:
+    "https://unpkg.com/@mercuryworkshop/libcurl-transport@1.5.0/dist/index.mjs",
 };
 
 //////////////////////////////
@@ -55,22 +57,22 @@ const swAllowedHostnames = ["localhost", "127.0.0.1"];
  * @throws Will throw if service workers are unsupported or not HTTPS on disallowed hosts.
  */
 async function registerSW() {
-	if (!navigator.serviceWorker) {
-		if (
-			location.protocol !== "https:" &&
-			!swAllowedHostnames.includes(location.hostname)
-		)
-			throw new Error("Service workers cannot be registered without https.");
+  if (!navigator.serviceWorker) {
+    if (
+      location.protocol !== "https:" &&
+      !swAllowedHostnames.includes(location.hostname)
+    )
+      throw new Error("Service workers cannot be registered without https.");
 
-		throw new Error("Your browser doesn't support service workers.");
-	}
+    throw new Error("Your browser doesn't support service workers.");
+  }
 
-	await navigator.serviceWorker.register(stockSW);
+  await navigator.serviceWorker.register(stockSW);
 }
 
 if (window.self === window.top) {
-	await registerSW();
-	console.log("lethal.js: Service Worker registered");
+  await registerSW();
+  console.log("lethal.js: Service Worker registered");
 }
 
 //////////////////////////////
@@ -84,11 +86,11 @@ if (window.self === window.top) {
  * @returns {string} Valid URL string.
  */
 export function makeURL(input, template = "https://google.com/search?q=%s") {
-	try {
-		return new URL(input).toString();
-	} catch (err) {}
+  try {
+    return new URL(input).toString();
+  } catch (err) {}
 
-	return template.replace("%s", encodeURIComponent(input));
+  return template.replace("%s", encodeURIComponent(input));
 }
 
 /**
@@ -96,10 +98,12 @@ export function makeURL(input, template = "https://google.com/search?q=%s") {
  * @returns {Promise<void>}
  */
 async function updateBareMux() {
-	if (transportURL != null && wispURL != null) {
-		console.log(`lethal.js: Setting BareMux to ${transportURL} and Wisp to ${wispURL}`);
-		await connection.setTransport(transportURL, [{ wisp: wispURL }]);
-	}
+  if (transportURL != null && wispURL != null) {
+    console.log(
+      `lethal.js: Setting BareMux to ${transportURL} and Wisp to ${wispURL}`
+    );
+    await connection.setTransport(transportURL, [{ wisp: wispURL }]);
+  }
 }
 
 /**
@@ -108,9 +112,9 @@ async function updateBareMux() {
  * @returns {Promise<void>}
  */
 export async function setTransport(transport) {
-	console.log(`lethal.js: Setting transport to ${transport}`);
-	transportURL = transportOptions[transport] || transport;
-	await updateBareMux();
+  console.log(`lethal.js: Setting transport to ${transport}`);
+  transportURL = transportOptions[transport] || transport;
+  await updateBareMux();
 }
 
 /**
@@ -118,7 +122,7 @@ export async function setTransport(transport) {
  * @returns {string | undefined}
  */
 export function getTransport() {
-	return transportURL;
+  return transportURL;
 }
 
 /**
@@ -127,9 +131,9 @@ export function getTransport() {
  * @returns {Promise<void>}
  */
 export async function setWisp(wisp) {
-	console.log(`lethal.js: Setting Wisp to ${wisp}`);
-	wispURL = wisp;
-	await updateBareMux();
+  console.log(`lethal.js: Setting Wisp to ${wisp}`);
+  wispURL = wisp;
+  await updateBareMux();
 }
 
 /**
@@ -137,18 +141,21 @@ export async function setWisp(wisp) {
  * @returns {string | undefined}
  */
 export function getWisp() {
-	return wispURL;
+  return wispURL;
 }
-
 
 /**
  * Gets the proxied URL
  * @param {string} input - The input URL or hostname.
  * @returns {Promise<string>}
  */
-export async function getProxied(input) {
-	const url = makeURL(input);
-	return scramjet.encodeUrl(url);
+export async function proxySJ(input) {
+  const url = makeURL(input);
+  return scramjet.encodeUrl(url);
+}
+export async function proxyUV(input) {
+  const url = makeURL(input);
+   return __uv$config.prefix + __uv$config.encodeUrl(url);
 }
 
 /**
@@ -156,98 +163,98 @@ export async function getProxied(input) {
  * @param {HTMLElement} frames - The frames container element.
  */
 export function setFrames(frames) {
-	framesElement = frames;
+  framesElement = frames;
 }
 
 /**
  * Class representing a browser tab with its own iframe.
  */
 export class Tab {
-	/**
-	 * Creates a new tab with an iframe and appends it to frames container.
-	 */
-	constructor() {
-		tabCounter++;
-		this.tabNumber = tabCounter;
+  /**
+   * Creates a new tab with an iframe and appends it to frames container.
+   */
+  constructor() {
+    tabCounter++;
+    this.tabNumber = tabCounter;
 
-		this.frame = document.createElement("iframe");
-		this.frame.setAttribute("class", "w-full h-full border-0 fixed");
-		this.frame.setAttribute("title", "Proxy Frame");
-		this.frame.setAttribute("src", "/newtab");
-		this.frame.setAttribute("loading", "lazy");
-		this.frame.setAttribute("id", `frame-${tabCounter}`);
-		framesElement.appendChild(this.frame);
+    this.frame = document.createElement("iframe");
+    this.frame.setAttribute("class", "w-full h-full border-0 fixed");
+    this.frame.setAttribute("title", "Proxy Frame");
+    this.frame.setAttribute("src", "/newtab");
+    this.frame.setAttribute("loading", "lazy");
+    this.frame.setAttribute("id", `frame-${tabCounter}`);
+    framesElement.appendChild(this.frame);
 
-		this.switch();
+    this.switch();
 
-		this.frame.addEventListener("load", () => this.handleLoad());
+    this.frame.addEventListener("load", () => this.handleLoad());
 
-		document.dispatchEvent(
-			new CustomEvent("new-tab", {
-				detail: { tabNumber: tabCounter },
-			}),
-		);
-	}
+    document.dispatchEvent(
+      new CustomEvent("new-tab", {
+        detail: { tabNumber: tabCounter },
+      })
+    );
+  }
 
-	/**
-	 * Switches to this tab, hiding other iframes and updating the address input.
-	 */
-	switch() {
-		currentTab = this.tabNumber;
-		const frames = document.querySelectorAll("iframe");
-		[...frames].forEach((frame) => frame.classList.add("hidden"));
-		this.frame.classList.remove("hidden");
+  /**
+   * Switches to this tab, hiding other iframes and updating the address input.
+   */
+  switch() {
+    currentTab = this.tabNumber;
+    const frames = document.querySelectorAll("iframe");
+    [...frames].forEach((frame) => frame.classList.add("hidden"));
+    this.frame.classList.remove("hidden");
 
-		currentFrame = document.getElementById(`frame-${this.tabNumber}`);
+    currentFrame = document.getElementById(`frame-${this.tabNumber}`);
 
-		addressInput.value = decodeURIComponent(
-			this.frame?.contentWindow?.location.href.split("/").pop()
-		);
+    addressInput.value = decodeURIComponent(
+      this.frame?.contentWindow?.location.href.split("/").pop()
+    );
 
-		document.dispatchEvent(
-			new CustomEvent("switch-tab", {
-				detail: { tabNumber: this.tabNumber },
-			}),
-		);
-	}
+    document.dispatchEvent(
+      new CustomEvent("switch-tab", {
+        detail: { tabNumber: this.tabNumber },
+      })
+    );
+  }
 
-	/**
-	 * Closes this tab by removing its iframe and dispatching a close event.
-	 */
-	close() {
-		this.frame.remove();
+  /**
+   * Closes this tab by removing its iframe and dispatching a close event.
+   */
+  close() {
+    this.frame.remove();
 
-		document.dispatchEvent(
-			new CustomEvent("close-tab", {
-				detail: { tabNumber: this.tabNumber },
-			}),
-		);
-	}
+    document.dispatchEvent(
+      new CustomEvent("close-tab", {
+        detail: { tabNumber: this.tabNumber },
+      })
+    );
+  }
 
-	/**
-	 * Handles iframe load event: updates history and address input.
-	 */
-	handleLoad() {
-		let url = decodeURIComponent(
-			this.frame?.contentWindow?.location.href.split("/").pop()
-		);
-		let title = this.frame?.contentWindow?.document.title;
+  /**
+   * Handles iframe load event: updates history and address input.
+   */
+  handleLoad() {
+    let url = decodeURIComponent(
+      this.frame?.contentWindow?.location.href.split("/").pop()
+    );
+    let title = this.frame?.contentWindow?.document.title;
 
-		let history = localStorage.getItem("history")
-			? JSON.parse(localStorage.getItem("history"))
-			: [];
-		history = [...history, { url, title }];
-		localStorage.setItem("history", JSON.stringify(history));
+    let history = localStorage.getItem("history")
+      ? JSON.parse(localStorage.getItem("history"))
+      : [];
+    history = [...history, { url, title }];
+    localStorage.setItem("history", JSON.stringify(history));
 
-		document.dispatchEvent(
-			new CustomEvent("url-changed", {
-				detail: { tabId: currentTab, title, url },
-			}),
-		);
+    document.dispatchEvent(
+      new CustomEvent("url-changed", {
+        detail: { tabId: currentTab, title, url },
+      })
+    );
 
-		if (url === "newtab") url = "bromine://newtab";
-		addressInput.value = url;
-	}
+    if (url === "newtab") url = "bromine://newtab";
+    addressInput.value = url;
+  }
 }
 
 /**
@@ -255,7 +262,7 @@ export class Tab {
  * @returns {Promise<void>}
  */
 export async function newTab() {
-	new Tab();
+  new Tab();
 }
 
 /**
@@ -263,23 +270,23 @@ export async function newTab() {
  * @param {number} tabNumber - Tab number to switch to.
  */
 export function switchTab(tabNumber) {
-	const frames = document.querySelectorAll("iframe");
-	[...frames].forEach((frame) => {
-		frame.classList.toggle("hidden", frame.id !== `frame-${tabNumber}`);
-	});
+  const frames = document.querySelectorAll("iframe");
+  [...frames].forEach((frame) => {
+    frame.classList.toggle("hidden", frame.id !== `frame-${tabNumber}`);
+  });
 
-	currentTab = tabNumber;
-	currentFrame = document.getElementById(`frame-${tabNumber}`);
+  currentTab = tabNumber;
+  currentFrame = document.getElementById(`frame-${tabNumber}`);
 
-	addressInput.value = decodeURIComponent(
-		currentFrame?.contentWindow?.location.href.split("/").pop()
-	);
+  addressInput.value = decodeURIComponent(
+    currentFrame?.contentWindow?.location.href.split("/").pop()
+  );
 
-	document.dispatchEvent(
-		new CustomEvent("switch-tab", {
-			detail: { tabNumber },
-		}),
-	);
+  document.dispatchEvent(
+    new CustomEvent("switch-tab", {
+      detail: { tabNumber },
+    })
+  );
 }
 
 /**
@@ -287,25 +294,69 @@ export function switchTab(tabNumber) {
  * @param {number} tabNumber - Tab number to close.
  */
 export function closeTab(tabNumber) {
-	const frames = document.querySelectorAll("iframe");
-	[...frames].forEach((frame) => {
-		if (frame.id === `frame-${tabNumber}`) {
-			frame.remove();
-		}
-	});
+  const frames = document.querySelectorAll("iframe");
+  [...frames].forEach((frame) => {
+    if (frame.id === `frame-${tabNumber}`) {
+      frame.remove();
+    }
+  });
 
-	if (currentTab === tabNumber) {
-		const otherFrames = document.querySelectorAll('iframe[id^="frame-"]');
-		if (otherFrames.length > 0) {
-			switchTab(parseInt(otherFrames[0].id.replace("frame-", "")));
-		} else {
-			newTab();
-		}
-	}
+  if (currentTab === tabNumber) {
+    const otherFrames = document.querySelectorAll('iframe[id^="frame-"]');
+    if (otherFrames.length > 0) {
+      switchTab(parseInt(otherFrames[0].id.replace("frame-", "")));
+    } else {
+      newTab();
+    }
+  }
 
-	document.dispatchEvent(
-		new CustomEvent("close-tab", {
-			detail: { tabNumber },
-		}),
-	);
+  document.dispatchEvent(
+    new CustomEvent("close-tab", {
+      detail: { tabNumber },
+    })
+  );
+}
+
+export function getOriginalUrl(url) {
+  if (!url) return "";
+
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    if (url.includes("/scramjet/") && url.includes(location.origin)) {
+      try {
+        const urlObj = new URL(url);
+        if (urlObj.pathname.startsWith("/scramjet/")) {
+          const encodedUrl = urlObj.pathname.substring("/scramjet/".length);
+          try {
+            const decoded = decodeURIComponent(encodedUrl);
+            if (decoded.startsWith("http")) {
+              return decoded;
+            }
+            const base64Decoded = atob(encodedUrl);
+            if (base64Decoded.startsWith("http")) {
+              return base64Decoded;
+            }
+          } catch (e) {}
+        }
+      } catch (e) {}
+    }
+    return url;
+  }
+}
+export function getWebsiteName(url) {
+  try {
+    if (!url || (!url.startsWith("http://") && !url.startsWith("https://"))) {
+      return url;
+    }
+
+    const urlObj = new URL(url);
+    let hostname = urlObj.hostname;
+
+    if (hostname.startsWith("www.")) {
+      hostname = hostname.substring(4);
+    }
+
+    return hostname;
+  } catch (e) {
+    return url.length > 20 ? url.substring(0, 20) + "..." : url;
+  }
 }
