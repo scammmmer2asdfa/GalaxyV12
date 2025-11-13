@@ -38,6 +38,7 @@ document.addEventListener("keyup", async (e) => {
     } else {
       url = await proxySJ(makeURL(input.value));
       console.log("Not set");
+      proxyType = localStorage.setItem("SJ");
     }
     iframe.src = url;
     if (proxyType === "SJ") {
