@@ -138,26 +138,19 @@ function updateName() {
 }
 
 updateName();
+let backgroundURL = localStorage.getItem("backgroundURL");
+
 function setBackground(bg) {
   localStorage.setItem("backgroundURL", bg);
-  let backgroundURL = localStorage.getItem("backgroundURL");
+  backgroundURL = localStorage.getItem("backgroundURL");
   document.documentElement.style.setProperty(
     "--backgroundURL",
     `url(${backgroundURL})`
   );
 }
-function setProxyType(x){
+function setProxyType(x) {
   localStorage.setItem("proxyType", x);
 }
 function setSearchEngine(z) {
   localStorage.setItem("searchEngine", z);
 }
-const intervalId = setInterval(() => {
-  loadTitleAndFavicon();
-  document.documentElement.style.setProperty(
-    "--backgroundURL",
-    `url(${backgroundURL})`
-  );
-}, 1000);
-
-setTimeout(() => clearInterval(intervalId), 10000);

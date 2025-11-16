@@ -28,7 +28,7 @@ gsap.fromTo(
     stagger: 0.1,
   }
 );
-let zindex = "0";
+let zindex = 0;
 
 function openWindow(windowSrc) {
   const windowEl = document.createElement("div");
@@ -67,7 +67,6 @@ function openWindow(windowSrc) {
   closeBtn.addEventListener("click", closeWindow);
   const minimizeBtn = windowEl.querySelector(".minimize");
   minimizeBtn.addEventListener("click", minimizeWindow);
-
   iframe.className = "windowFrame";
   iframe.src = windowSrc;
   iframe.style.width = "100%";
@@ -84,12 +83,12 @@ function openWindow(windowSrc) {
   let frame = document.querySelectorAll(".windowFrame");
   controls.addEventListener("mousedown", (e) => {
     windowEl.style.transition = "0s";
-    windowEl.style.zIndex = zindex++;
+
+
     if (windowValue === "1") {
       isDragging = true;
       offset.x = e.clientX - windowEl.offsetLeft;
       offset.y = e.clientY - windowEl.offsetTop;
-      frame.forEach((f) => (f.style.pointerEvents = "none"));
     } else {
       changeIcon();
       windowEl.style.transition = "0s";
@@ -97,22 +96,24 @@ function openWindow(windowSrc) {
       isDragging = true;
       offset.x = e.clientX - windowEl.offsetLeft;
       offset.y = e.clientY - windowEl.offsetTop;
-      frame.forEach((f) => (f.style.pointerEvents = "none"));
     }
   });
+  windowEl.addEventListener("mousedown", () => {
+    zindex++;
+    windowEl.style.zIndex=zindex;
+    console.log(zindex)
 
+  });
   // --- resizing stuff
   resizeHandle.addEventListener("mousedown", (e) => {
     windowEl.style.transition = "0s";
-    windowEl.style.zIndex = zindex++;
+
     isResizing = true;
     offset.x = e.clientX;
     offset.y = e.clientY;
-    iframe.style.pointerEvents = "none";
     e.stopPropagation();
   });
   document.addEventListener("mousemove", (e) => {
-    iframe.style.pointerEvents = "none";
 
     windowEl.style.transition = "0s";
     if (isDragging) {
@@ -142,7 +143,6 @@ function openWindow(windowSrc) {
   document.addEventListener("mouseup", () => {
     isDragging = false;
     isResizing = false;
-    iframe.style.pointerEvents = "auto";
   });
   let square = windowEl.querySelector("#square");
   let squares = windowEl.querySelector("#squares");

@@ -60,6 +60,8 @@ function newTab() {
         let remainingTabs = document.querySelectorAll(".tab");
         if (remainingTabs.length > 0)
           setActiveTab(remainingTabs[remainingTabs.length - 1]);
+
+        
       }
     });
   });
