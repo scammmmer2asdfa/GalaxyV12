@@ -228,5 +228,3 @@ function openWindow(windowSrc) {
     });
   }
 }
-// NAV BAR FUNCTIONS
-openWindow("p.html");
