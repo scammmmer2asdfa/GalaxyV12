@@ -145,3 +145,28 @@ function setProxyType(x) {
 function setSearchEngine(z) {
   localStorage.setItem("searchEngine", z);
 }
+const uploadDiv = document.getElementById("uplaoddiv");
+const fileInput = document.getElementById("fileInput");
+let file;
+uploadDiv.addEventListener("click", () => {
+  fileInput.click();
+  file = "";
+});
+fileInput.addEventListener("change", () => {
+  file = fileInput.files[0];
+
+  if (file && file.type.startsWith("image/")) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const uploadedimg = reader.result;
+      localStorage.setItem("backgroundURL", uploadedimg);
+      backgroundURL = uploadedimg;
+      document.documentElement.style.setProperty(
+        "--backgroundURL",
+        `url(${backgroundURL})`
+      );
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
