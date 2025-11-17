@@ -164,7 +164,6 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .menuItem:hover {
@@ -267,26 +266,31 @@ button:hover {
 #nameInput::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
-
+#nameInput:focus {
+  box-shadow: 0 0 10px rgba(119, 119, 119, 0.5);
+  background: #262626;
+  color: #ffffff;
+  transform: translatey(-3px);
+}
 /* Scrollbar width */
 ::-webkit-scrollbar {
-  width: 12px;   /* width of vertical scrollbar */
-  height: 12px;  /* height of horizontal scrollbar */
+  width: 12px; /* width of vertical scrollbar */
+  height: 12px; /* height of horizontal scrollbar */
 }
 
 /* Track (background) */
 ::-webkit-scrollbar-track {
-  background: #505050;  /* light gray */
-  border-radius: 10px;   /* rounded corners */
+  background: #505050; /* light gray */
+  border-radius: 10px; /* rounded corners */
 }
 
 /* Thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
-  background: #a5a5a5;      /* dark gray */
+  background: #a5a5a5; /* dark gray */
   border-radius: 10px;
 }
 
 /* Thumb on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #696969;      /* darker gray */
+  background: #696969; /* darker gray */
 }
