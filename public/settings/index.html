@@ -40,19 +40,57 @@
           >
         </p>
         <p>Auto About Blank</p>
-        <input type="checkbox" role="switch" class="circle" onclick="checkAutoStatus()" id="autoAbout"/>
+        <input
+          type="checkbox"
+          role="switch"
+          class="circle"
+          onclick="checkAutoStatus()"
+          id="autoAbout"
+        />
         <p>Auto Blob</p>
-        <input type="checkbox" role="switch" class="circle" onclick="checkAutoStatus()" id="autoBlob" />
+        <input
+          type="checkbox"
+          role="switch"
+          class="circle"
+          onclick="checkAutoStatus()"
+          id="autoBlob"
+        />
       </div>
       <div class="block">
         <h2 class="blockTitle">Tab Presets</h2>
         <p class="desc">Changes how the tab looks like</p>
         <div id="moreMenu" class="menu">
-          <div class="menuItem" onclick="updateTitleAndFavicon('Classroom', 'https://ssl.gstatic.com/classroom/favicon.png')">Google Classroom</div>
-          <div class="menuItem" onclick="updateTitleAndFavicon('Home - Google Drive', 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png')">Google Drive</div>
-          <div class="menuItem" onclick="updateTitleAndFavicon('Login', '../assets/img/icons/classlink.png')">Classlink</div>
-          <div class="menuItem" onclick="updateTitleAndFavicon('Google', 'https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico')">Google</div>
-          <div class="menuItem" onclick="updateTitleAndFavicon('GalaxyV6','../favicon.ico')" style="color: rgb(241, 89, 89)">Reset</div>
+          <div
+            class="menuItem"
+            onclick="updateTitleAndFavicon('Classroom', 'https://ssl.gstatic.com/classroom/favicon.png')"
+          >
+            Google Classroom
+          </div>
+          <div
+            class="menuItem"
+            onclick="updateTitleAndFavicon('Home - Google Drive', 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png')"
+          >
+            Google Drive
+          </div>
+          <div
+            class="menuItem"
+            onclick="updateTitleAndFavicon('Login', '../assets/img/icons/classlink.png')"
+          >
+            Classlink
+          </div>
+          <div
+            class="menuItem"
+            onclick="updateTitleAndFavicon('Google', 'https://www.gstatic.com/images/branding/searchlogo/ico/favicon.ico')"
+          >
+            Google
+          </div>
+          <div
+            class="menuItem"
+            onclick="updateTitleAndFavicon('GalaxyV6','../favicon.ico')"
+            style="color: rgb(241, 89, 89)"
+          >
+            Reset
+          </div>
         </div>
       </div>
     </div>
@@ -67,7 +105,9 @@
       </div>
       <div class="block">
         <h2 class="blockTitle">Change Background</h2>
-        <p class="desc">Please note that the image you upload must be under 10 megabytes.</p>
+        <p class="desc">
+          Please note that the image you upload must be under 10 megabytes.
+        </p>
         <div class="chooseBg stagger2" id="chooseBg">
           <div class="sdf stagger2">
             <div
@@ -140,9 +180,19 @@
           Please note that Google will <b>not</b> work with UV.
         </p>
         <div>
-          <button onclick="setSearchEngine('https://google.com/search?q=%s')">Google</button>
-          <button onclick="setSearchEngine('https://search.brave.com/search?q=%s')">Brave</button>
-          <button onclick="setSearchEngine('https://duckduckgo.com/search?q=%s')">DuckDuckGo</button>
+          <button onclick="setSearchEngine('https://google.com/search?q=%s')">
+            Google
+          </button>
+          <button
+            onclick="setSearchEngine('https://search.brave.com/search?q=%s')"
+          >
+            Brave
+          </button>
+          <button
+            onclick="setSearchEngine('https://duckduckgo.com/search?q=%s')"
+          >
+            DuckDuckGo
+          </button>
         </div>
       </div>
     </div>

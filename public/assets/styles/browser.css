@@ -1,5 +1,6 @@
 :root {
   /* --backgroundURL: url("../img/black.jpg"); */
+  --glassmorphismBG: rgba(240, 240, 240, 0.05);
 }
 body {
   /* background-image: var(--backgroundURL); */
@@ -8,15 +9,14 @@ body {
   overflow: hidden;
   color: rgb(187, 182, 182);
   transition-duration: 0.4s;
+  border-top: 0px;
   margin: 0px;
   display: flex;
   flex-direction: column;
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.0955); /* semi-transparent base */
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+  background: var(--glassmorphismBG);
   backdrop-filter: blur(10px);
-  background-repeat: repeat;
-  background-blend-mode: overlay;
+
 }
 @font-face {
   font-family: fabrica;
@@ -297,10 +297,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 50; /* below menu but above iframe */
+  z-index: 100; /* below menu but above iframe */
   display: none;
   background-color: transparent;
   cursor: default;
+  
 }
 #overlay.show {
   display: block;

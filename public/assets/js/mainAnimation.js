@@ -89,16 +89,22 @@ function openWindow(windowSrc) {
   // -------------- DRAGGING -----------------
   controls.addEventListener("mousedown", (e) => {
     windowEl.style.transition = "0s";
-    allIframes.forEach((f) => (f.style.pointerEvents = "none"));
-    isDragging = true;
-    offset.x = e.clientX - windowEl.offsetLeft;
-    offset.y = e.clientY - windowEl.offsetTop;
-  });
+    if (windowValue === "1") {
+      allIframes.forEach((f) => (f.style.pointerEvents = "none"));
+      isDragging = true;
+      offset.x = e.clientX - windowEl.offsetLeft;
+      offset.y = e.clientY - windowEl.offsetTop;
+    } else {
+      changeIcon();
+      allIframes.forEach((f) => (f.style.pointerEvents = "none"));
 
-  windowEl.addEventListener("mousedown", () => {
-    windowEl.style.zIndex = ++zindex;
+      windowEl.style.transition = "0s";
+      windowEl.style.top = "0px";
+      isDragging = true;
+      offset.x = e.clientX - windowEl.offsetLeft;
+      offset.y = e.clientY - windowEl.offsetTop;
+    }
   });
-
   // -------------- RESIZING (4 corners) -----------------
   handles.forEach((handle) => {
     handle.addEventListener("mousedown", (e) => {
@@ -263,14 +269,6 @@ function openWindow(windowSrc) {
     });
   }
 }
-
-
-
-
-
-
-
-
 const currentSiteUrl = window.location.href + "?redirect=true";
 function launchBlob() {
   const htmlContent = `
