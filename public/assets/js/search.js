@@ -5,7 +5,7 @@ import {
   proxySJ,
   proxyUV,
 } from "../../lithium.mjs";
-import("../../glass/glass.config.js");
+import("../../glass/glassJS.config.js");
 // holy shit this file is so messy
 
 let iframe;
