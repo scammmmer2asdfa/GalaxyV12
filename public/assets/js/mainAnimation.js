@@ -18,27 +18,50 @@ gsap.fromTo(
   { y: 30, opacity: 0 },
   { duration: 0.4, y: 0, opacity: 1, stagger: 0.1 }
 );
+let x = localStorage.getItem("name");
+
+document.querySelector(".userName").textContent = x;
 
 let zindex = 0;
-
-function openWindow( windowSrc, windowLeft, windowTop, windowHeight, windowWidth, windowType) 
-{
+let spawnOffset = 0;
+const offsetIncrement = 30;
+const maxOffset = 300;
+function openWindow(
+  windowSrc,
+  windowLeft,
+  windowTop,
+  windowHeight,
+  windowWidth,
+  windowType
+) {
   const snapLeft = document.getElementById("snap-left");
   const snapRight = document.getElementById("snap-right");
   let snapTarget = null;
-  windowType = windowType || "iframe"
-  console.log(windowType)
+  windowType = windowType || "iframe";
+  console.log(windowType);
   const windowEl = document.createElement("div");
   const iframe = document.createElement(windowType);
   let windowValue = "1";
   windowEl.className = "window";
   windowEl.style.position = "absolute";
-  windowEl.style.left = windowLeft || "19%";
-  windowEl.style.top = windowTop || "19%";
   windowEl.style.height = windowHeight || "45%";
   windowEl.style.width = windowWidth || "45%";
   windowEl.style.zIndex = ++zindex;
   windowEl.style.transition = "opacity 0.3s ease";
+  if (!windowLeft && !windowTop) {
+    windowEl.style.left = `calc(19% + ${spawnOffset}px)`;
+    windowEl.style.top = `calc(19% + ${spawnOffset}px)`;
+
+    spawnOffset += offsetIncrement;
+
+    if (spawnOffset > maxOffset) {
+      spawnOffset = 0;
+    }
+  } else {
+    windowEl.style.left = windowLeft || "19%";
+    windowEl.style.top = windowTop || "19%";
+  }
+
   windowEl.innerHTML = `
     <div class="windowTop">
       <div class="windowMove"></div>

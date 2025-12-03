@@ -11,7 +11,10 @@ function updateFavicon(href) {
 
 function toggleGlass(enabled) {
   if (enabled) {
-    document.documentElement.style.setProperty("--glassmorphismBG", "rgba(0,0,0,1)");
+    document.documentElement.style.setProperty(
+      "--glassmorphismBG",
+      "rgba(0,0,0,1)"
+    );
   } else {
     document.documentElement.style.removeProperty("--glassmorphismBG");
   }
@@ -25,25 +28,33 @@ function applyStoredValues() {
 
   const backgroundURL = localStorage.getItem("backgroundURL");
   if (backgroundURL) {
-    document.documentElement.style.setProperty("--backgroundURL", `url(${backgroundURL})`);
+    document.documentElement.style.setProperty(
+      "--backgroundURL",
+      `url(${backgroundURL})`
+    );
   }
 
   toggleGlass(localStorage.getItem("glassToggleStore") === "false");
 }
 
 function loadAntiClose() {
-  let xyz = localStorage.getItem("checkAntiClose")
+  let xyz = localStorage.getItem("checkAntiClose");
   if (xyz == "true") {
     window.addEventListener("beforeunload", function (event) {
       event.preventDefault();
-      event.returnValue = "This maessage prevents teachers from closing the tab";
+      event.returnValue =
+        "This maessage prevents teachers from closing the tab";
     });
     localStorage.setItem("checkAntiClose", "true");
   } else {
     localStorage.setItem("checkAntiClose", "false");
   }
 }
+function updateName() {
+  let x = localStorage.getItem("name");
 
+  document.querySelector(".userName").textContent = x;
+}
 window.addEventListener("storage", (event) => {
   switch (event.key) {
     case "pageTitle":
@@ -53,17 +64,21 @@ window.addEventListener("storage", (event) => {
       updateFavicon(event.newValue);
       break;
     case "backgroundURL":
-      document.documentElement.style.setProperty("--backgroundURL", `url(${event.newValue})`);
+      document.documentElement.style.setProperty(
+        "--backgroundURL",
+        `url(${event.newValue})`
+      );
       break;
     case "glassToggleStore":
       toggleGlass(event.newValue === "false");
       break;
     case "checkAntiClose":
-        loadAntiClose();
+      loadAntiClose();
+      break;
+    case "name":
+      updateName();
+      break;
   }
 });
 
 document.addEventListener("DOMContentLoaded", applyStoredValues);
-
-
-

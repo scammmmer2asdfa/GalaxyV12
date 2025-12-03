@@ -10,6 +10,7 @@ body {
   overflow: hidden;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center center;
   color: rgb(187, 182, 182);
   transition-duration: 0.4s;
   margin: 0px;
@@ -28,7 +29,7 @@ body {
   height: 100%;
   position: absolute;
   display: flex;
-  justify-content: center;
+  justify-content: center; 
   align-items: center;
   flex-direction: column;
   z-index: 1;
@@ -212,8 +213,15 @@ body {
   padding: 5px;
   font-family: fabrica;
   font-size: 15px;
+  color: white;
 }
-.nameVer {
+.verticalDivider {
+  padding: 3px;
+  margin: 0px;
+  color: rgb(187, 182, 182);
+
+}
+.nameVer, .userName {
   color: rgb(255, 255, 255);
   align-items: center;
   margin: 0px;

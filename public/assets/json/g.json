@@ -37,6 +37,12 @@
     "genre": "Incremental"
   },
   {
+    "name": "Undertale",
+    "file": "/assets/g/76.html",
+    "image": "79.png",
+    "genre": "RPG"
+  },
+  {
     "name": "Blocky Snakes",
     "file": "/assets/g/71.html",
     "image": "71.png",
@@ -85,6 +91,18 @@
     "genre": "Rhythm"
   },
   {
+    "name": "Geometry Dash",
+    "file": "/assets/g/81.html",
+    "image": "84.png",
+    "genre": "Platformer"
+  },
+  {
+    "name": "3D Dash'",
+    "file": "/assets/g/82.html",
+    "image": "85.png",
+    "genre": "Platformer"
+  },
+  {
     "name": "Baldi's Basics",
     "file": "/assets/g/5.html",
     "image": "5.png",
@@ -126,6 +144,12 @@
     "file": "/assets/g/36.html",
     "image": "36.png",
     "genre": "Multiplayer"
+  },
+  {
+    "name": "Super Mario 64",
+    "file": "/assets/g/77.html",
+    "image": "80.png",
+    "genre": "Platformer"
   },
   {
     "name": "Drive Mad",
@@ -200,6 +224,24 @@
     "genre": "Incremental"
   },
   {
+    "name": "Funny Shooter 2",
+    "file": "/assets/g/78.html",
+    "image": "81.png",
+    "genre": "Action / Shooter"
+  },
+  {
+    "name": "Superhot Line Miami",
+    "file": "/assets/g/80.html",
+    "image": "83.png",
+    "genre": "Action / Shooter"
+  },
+  {
+    "name": "Bacon May Die by SnoutUp",
+    "file": "/assets/g/79.html",
+    "image": "82.png",
+    "genre": "Action"
+  },
+  {
     "name": "Basketball Random",
     "file": "/assets/g/7.html",
     "image": "7.png",
@@ -253,6 +295,13 @@
     "image": "61.png",
     "genre": "Platformer"
   },
+  {
+    "name": "Granny",
+    "file": "/assets/g/83.html",
+    "image": "86.png",
+    "genre": "Horror"
+  },
+
   {
     "name": "Granny 3",
     "file": "/assets/g/66.html",
@@ -412,7 +461,7 @@
   },
   {
     "name": "Just a Platformer",
-    "file":"/assets/g/jap/index.html",
+    "file": "/assets/g/jap/index.html",
     "image": "23.png",
     "genre": "Platformer"
   },

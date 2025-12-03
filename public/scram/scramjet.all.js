@@ -167,17 +167,9 @@ ${l}`}}if((0,n.U5)("rewriterLogs",r.base))for(let e of s.errors)console.error("o
                             <div id="troubleshooting">
                                 <p>Try:</p>
                                 <ul>
-                                    <li>Checking your internet connection</li>
-                                    <li>Verifying you entered the correct address</li>
-                                    <li>Clearing the site data</li>
-                                    <li>Contacting <b id="hostname"></b>'s administrator</li>
-                                    <li>Verify the server isn't censored</li>
-                                </ul>
-                                <p>If you're the administrator of <b id="hostname"></b>, try:</p>
-                                    <ul>
-                                    <li>Restarting your server</li>
-                                    <li>Updating Scramjet</li>
-                                    <li>Troubleshooting the error on the <a href="https://github.com/MercuryWorkshop/scramjet" target="_blank">GitHub repository</a></li>
+                                    <b>Clearing site cache by going to:</b>
+                                    <li>chrome://settings/content/all?searchSubpage=<a id="hostname"></a></li>
+                                    <li>If it's still broken, please make a bug report or join the dc server</li>
                                 </ul>
                             </div>
                         </div>

@@ -186,7 +186,9 @@ button:hover {
   border: 2px solid rgb(153, 153, 153);
   border-radius: 10px;
   cursor: pointer;
-}
+  width: 257px;
+  object-fit: fill;
+  }
 
 .upload {
   border: 0px;
