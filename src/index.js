@@ -8,13 +8,6 @@ import path from "node:path";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import dotenv from "dotenv";
-import fastifyRateLimit from "@fastify/rate-limit";
-
-fastify.register(fastifyRateLimit, {
-  max: 50,             // 50 requests
-  timeWindow: "1 minute",
-  allowList: ["127.0.0.1"],  // allow local
-});
 
 dotenv.config();
 
