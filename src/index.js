@@ -37,11 +37,12 @@ const fastify = Fastify({
   logger: NODE_ENV === "development",
 });
 
-fastify.addHook("onRequest", async (req, reply) => {
-  const referer = req.headers['referer'] || 'N/A';
-  console.log(
-    `[${new Date().toISOString()}] Request from IP: ${req.ip}, Host: ${req.hostname}, URL: ${req.url}, Referer: ${referer}`
+fastify.setErrorHandler((error, request, reply) => {
+  const referer = request.headers['referer'] || 'N/A';
+  console.error(
+    `[${new Date().toISOString()}] ERROR: ${error.message}, IP: ${request.ip}, Host: ${request.hostname}, URL: ${request.url}, Referer: ${referer}`
   );
+  reply.status(500).send({ error: "Internal Server Error" });
 });
 fastify.register(fastifyStatic, {
   root: publicDir,
