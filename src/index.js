@@ -36,13 +36,33 @@ const fastify = Fastify({
   },
   logger: NODE_ENV === "development",
 });
-
 fastify.addHook("onRequest", async (req, reply) => {
-  const referer = req.headers['referer'] || 'N/A';
-  console.log(
-    `[${new Date().toISOString()}] Incoming request IP: ${req.ip}, Host: ${req.hostname}, URL: ${req.url}, Referer: ${referer}`
-  );
+  const time = new Date().toISOString();
+
+  const log = {
+    time,
+    method: req.method,
+    ip: req.ip,
+    ips: req.ips, // if behind proxy
+    hostname: req.hostname,
+    url: req.url,
+    protocol: req.protocol,
+    referer: req.headers['referer'] || 'N/A',
+    origin: req.headers['origin'] || 'N/A',
+    userAgent: req.headers['user-agent'] || 'N/A',
+    cookies: req.cookies || {},
+    headers: req.headers,
+  };
+
+  // If you want to see the request body, enable this:
+  // (Be careful—POST bodies can include passwords)
+  if (req.body) {
+    log.body = req.body;
+  }
+
+  console.log("Incoming Request →", JSON.stringify(log, null, 2));
 });
+
 const blockedIPs = new Set([
   "216.73.216.89",
   "13.125.247.245",
@@ -70,7 +90,7 @@ fastify.addHook("onRequest", async (req, reply) => {
   const ip = req.ip;
 
   if (blockedPrefixes.some(prefix => ip.startsWith(prefix))) {
-    reply.code(403).send({ error: "Forbidden" });
+    reply.code(403).send({ error: "Access Denied" });
     return;
   }
 });
