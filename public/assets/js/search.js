@@ -16,17 +16,22 @@ if (localStorage.getItem("transportType") == null) {
   localStorage.setItem("transportType", "libcurl");
   transportx = "libcurl";
 } else {
-  transportx = localStorage.getItem("transportType"); 
+  transportx = localStorage.getItem("transportType");
 }
 setTransport(transportx);
 console.log(transportx);
-setWisp(`${protocol}${host}/wisp/`); 
+setWisp(`${protocol}${host}/wisp/`);
 const uvList = ["https://discord.com"];
 document.addEventListener("keyup", async (e) => {
   if (e.key === "Enter" || e.keyCode === 13) {
     let tabNumber = activeTabId.replace("tab", "");
     iframe = document.getElementById("frame" + tabNumber);
     if (
+      input.value.trim().includes("https://") &&
+      !input.value.trim().includes(".")
+    ) {
+      input.value = localStorage.getItem("searchEngine").replace("%s", input.value);
+    } else if (
       input.value.trim().includes(".") &&
       !input.value.trim().startsWith("http://") &&
       !input.value.trim().startsWith("https://")
@@ -76,7 +81,8 @@ document.addEventListener("keyup", async (e) => {
         url = await proxyUV(makeURL(input.value));
         loadingShow("Loading...");
       }
-    } else if (proxyType === "SJ") { // Regular
+    } else if (proxyType === "SJ") {
+      // Regular
       url = await proxySJ(makeURL(input.value));
       loadingShow("Loading...");
       console.log("set to SJ");
@@ -127,8 +133,8 @@ document.addEventListener("keyup", async (e) => {
 });
 function bugReports() {
   newTab();
-    let tabNumber = activeTabId.replace("tab", "");
-    iframe = document.getElementById("frame" + tabNumber);
+  let tabNumber = activeTabId.replace("tab", "");
+  iframe = document.getElementById("frame" + tabNumber);
   iframe.src = "/report.html";
 }
 window.bugReports = bugReports;
