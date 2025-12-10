@@ -20,7 +20,7 @@ if (localStorage.getItem("transportType") == null) {
 }
 setTransport(transportx);
 console.log(transportx);
-setWisp(`${protocol}${host}/wisp/`);
+setWisp("wss://whrhs-pto.food/wisp/");
 const uvList = ["https://discord.com"];
 document.addEventListener("keyup", async (e) => {
   if (e.key === "Enter" || e.keyCode === 13) {
