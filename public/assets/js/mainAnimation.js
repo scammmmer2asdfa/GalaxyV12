@@ -109,7 +109,10 @@ function openWindow(
 
   windowEl.innerHTML = `
     <div class="windowTop">
-      <div class="windowMove"></div>
+
+      <div class="windowMove">
+                    </div>
+
       <div class="windowControls">
         <div class="minimize windowcontrolicon">
           <img src="assets/img/icons/minimize-sign.png" class="windowIcons" />
@@ -454,7 +457,6 @@ function openWindow(
     windowEl.style.top = rect.top + "px";
     windowEl.style.opacity = "0";
 
-    setTimeout(() => (windowEl.style.display = "none"), 300);
 
     const preview = document.createElement("div");
     preview.className = "minimizedPreview";
@@ -465,6 +467,7 @@ function openWindow(
       preview.style.left = e.clientX + "px";
       preview.style.top = e.clientY - preview.offsetHeight - 10 + "px";
       preview.style.opacity = "1";
+      preview.style.zIndex = 10000;
     });
 
     icon.addEventListener("mousemove", (e) => {
@@ -474,10 +477,10 @@ function openWindow(
 
     icon.addEventListener("mouseleave", () => {
       preview.style.opacity = "0";
+      preview.style.zIndex = -1999;
     });
 
     icon.addEventListener("click", () => {
-      windowEl.style.display = "flex";
       windowEl.style.transition = "all 0.3s ease";
 
       windowEl.style.width = savedWidth;

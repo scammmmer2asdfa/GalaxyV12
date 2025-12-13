@@ -52,15 +52,22 @@ h1 {
   font-family: nunito;
   font-weight: 800;
 }
+.blocks {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 30px;
+}
 .block {
-  transform: scale(0.95);
   background: var(--glassmorphismBlocks);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 25px;
-  width: 100%;
+  width: 40%;
   border-radius: 20px;
   margin-bottom: 60px;
+  flex-grow: 1;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
 }
 
@@ -167,9 +174,18 @@ button:hover {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  width: 1000px;
+  margin: 0px;
 }
-
+.backgroundBlock {
+  background: var(--glassmorphismBlocks);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 25px;
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 60px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
 .chooseBg {
   display: flex;
   flex-wrap: wrap;
@@ -188,7 +204,7 @@ button:hover {
   cursor: pointer;
   width: 257px;
   object-fit: fill;
-  }
+}
 
 .upload {
   border: 0px;
@@ -266,7 +282,7 @@ button:hover {
   transform: translatey(-3px);
 }
 .arial {
-  font-family: fabrica
+  font-family: fabrica;
 }
 .notice {
   position: fixed;
@@ -297,4 +313,3 @@ button:hover {
     right: -200px;
   }
 }
-

@@ -267,7 +267,7 @@
   },
   {
     "name": "Basketball Bros",
-    "file": "/assets/g/6.html",
+    "file": "/assets/g/basketbros/index.html",
     "image": "6.png",
     "genre": "Multiplayer / Arcade"
   },
@@ -276,6 +276,49 @@
     "file": "/assets/g/1.html",
     "image": "1.png",
     "genre": "Action / RPG"
+  },
+  {
+    "name": "Ragdoll Hit",
+    "file": "/assets/g/84.html",
+    "image": "92.png",
+    "genre": "Strategy / Casual"
+  },
+  {
+    "name": "Ragdoll Archers",
+    "file": "/assets/g/85.html",
+    "image": "93.png",
+    "genre": "Strategy / Casual"
+  },
+  {
+    "name": "Sonic CD",
+    "file": "/assets/g/86.html",
+    "image": "94.png",
+    "genre": "Platformer" 
+  },
+  {
+    "name": "Rolling Sky",
+    "file": "/assets/g/87.html",
+    "image": "95.png",
+    "genre": "Platformer / Casual"
+  },
+  {
+    "name": "Escape Road",
+    "file": "/assets/g/88.html",
+    "image": "91.png",
+    "genre": "Action / Racing"
+  },
+  {
+    "name": "Gun Mayhem",
+    "url": "https://gunmayhem.io/game/gun-mayhem/",
+    "image": "96.png",
+    "genre": "Action / Multiplayer",
+    "type": "UV"
+  },
+  {
+    "name": "Precision Client",
+    "url": "https://happinessad.github.io/html/a3/",
+    "image": "90.png",
+    "genre": "Multiplayer / Open World"
   },
   {
     "name": "SuperHot",

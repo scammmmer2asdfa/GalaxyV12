@@ -62,13 +62,15 @@
     <div class="topNav">
       <p
         class="nameVer"
-        onclick="openWindow('', 'updates.html', '0%', '35px', '60%', '30%')"
+        onclick="openWindow('left', 'updates.html', '0%', '35px', '60%', '30%')"
       >
         Gala<span class="filler">h</span>xyV6
       </p>
       <p class="verticalDivider">|</p>
       <p class="userName"></p>
-      <div class="left"></div>
+      <div class="middle">
+        <p></p>
+      </div>
       <div class="right">
         <div
           class="bugReport"
@@ -131,7 +133,7 @@
       </div>
       <div
         class="navItems navStagger"
-        onclick="openWindow('', 'settings/index.html')"
+        onclick="openWindow('', 'settings/index.html', '0', '0', 'calc(100% - 51px)', '99.999%')"
       >
         <img
           title="Settings"
@@ -149,7 +151,7 @@
       location.href = "onboarding/";
     }
 
-    const latestVersion = "6.2.3";
+    const latestVersion = "6.2.5";
     const storedVersion = localStorage.getItem("galaxyVersion");
     function update() {
       let updateDiv = document.getElementById("update");
@@ -159,7 +161,7 @@
 
     function checkVersion() {
       if (storedVersion == null || storedVersion == 0) {
-        openWindow("", "updates.html", "0px", "35px", "60%", "30%");
+        openWindow("left", "updates.html", "0px", "35px", "60%", "30%");
         localStorage.setItem("galaxyVersion", latestVersion);
       } else if (storedVersion !== latestVersion) {
         update();
@@ -188,4 +190,3 @@
     document.getElementById("myButton").addEventListener("click", tabUnder);
   </script>
 </html>
-
