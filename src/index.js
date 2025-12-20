@@ -39,19 +39,21 @@ const fastify = Fastify({
   logger: NODE_ENV === "development",
 });
 
-const blockedIPs = new Set(
-  JSON.parse(fs.readFileSync("src/blocked.json", "utf-8"))
-);
 
-fastify.addHook("onRequest", async (req, reply) => {
-  const ip = req.ip;
+try {
+  const raw = fs.readFileSync("src/blocked.json", "utf-8").trim();
 
-  if (blockedIPs.has(ip)) {
-    reply.code(403).send({ error: "Forbidden" });
-    return reply;
+  if (raw.length > 0) {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      blockedIPs = new Set(parsed);
+    } else {
+      console.warn("blocked.json is not an array. Ignoring.");
+    }
   }
-});
-
+} catch (err) {
+  console.error("Failed to load blocked.json:", err.message);
+}
 fastify.register(fastifyStatic, {
   root: publicDir,
   prefix: "/",
