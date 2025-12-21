@@ -24,6 +24,23 @@ function launchApp() {
     openApp(appURLx, "SJ");
     frame.style.zIndex = "1";
   }
+          const iframe = document.getElementById("frame");
+      const bar = document.getElementById("bar");
+
+      let progress = 0;
+      const fakeLoad = setInterval(() => {
+        if (progress < 90) {
+          progress += Math.random() * 8;
+          bar.style.width = progress + "%";
+        }
+      }, 200);
+      iframe.addEventListener("load", () => {
+        clearInterval(fakeLoad);
+        bar.style.width = "100%";
+        setTimeout(() => loader.remove(), 300);
+      });
+
+
 }
 window.addEventListener("load", launchApp);
 launchApp();

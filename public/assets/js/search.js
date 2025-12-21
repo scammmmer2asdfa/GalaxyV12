@@ -12,6 +12,9 @@ let iframe;
 let protocol = location.protocol === "https:" ? "wss://" : "ws://";
 let host = location.host;
 let transportx;
+const bar = document.getElementById("bar");
+let progress = 0;
+
 if (localStorage.getItem("transportType") == null) {
   localStorage.setItem("transportType", "libcurl");
   transportx = "libcurl";
@@ -24,13 +27,18 @@ setWisp(`${protocol}${host}/wisp/`);
 const uvList = ["https://discord.com"];
 document.addEventListener("keyup", async (e) => {
   if (e.key === "Enter" || e.keyCode === 13) {
+        setTimeout(() => (bar.style.width = "0%"), 300);
+        progress = 0;
+
     let tabNumber = activeTabId.replace("tab", "");
     iframe = document.getElementById("frame" + tabNumber);
     if (
       input.value.trim().includes("https://") &&
       !input.value.trim().includes(".")
     ) {
-      input.value = localStorage.getItem("searchEngine").replace("%s", input.value);
+      input.value = localStorage
+        .getItem("searchEngine")
+        .replace("%s", input.value);
     } else if (
       input.value.trim().includes(".") &&
       !input.value.trim().startsWith("http://") &&
@@ -128,9 +136,23 @@ document.addEventListener("keyup", async (e) => {
           tabName.textContent = "Cross-origin page";
         }
       };
+      const fakeLoad = setInterval(() => {
+        if (progress < 90) {
+          progress += Math.random() * 8;
+          bar.style.width = progress + "%";
+        }
+      }, 200);
+
+      iframe.addEventListener("load", () => {
+        clearInterval(fakeLoad);
+        bar.style.width = "100%";
+        setTimeout(() => (bar.style.width = "0%"), 300);
+        progress = 0;
+      });
     }
   }
 });
+
 function bugReports() {
   newTab();
   let tabNumber = activeTabId.replace("tab", "");

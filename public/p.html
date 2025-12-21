@@ -15,7 +15,7 @@
     <script type="module" defer src="assets/js/openapps.js"></script>
     <script defer type="module" src="assets/js/navFunctions.js"></script>
     <script defer src="assets/js/auto.js"></script>
-    <link rel="stylesheet" href="../assets/styles/assets.css" />
+    <link rel="stylesheet" href="assets/styles/assets.css" />
   </head>
   <!-- Google tag (gtag.js) -->
   <script
@@ -170,13 +170,13 @@
     <div class="bookmarks" id="bookmarks">
       <div
         class="bookmarklets"
-        onclick="openurl('https://shorturl.at/IG5Dl', 'UV')"
+        id="dcloading"
+        onclick="openurl('https://shorturl.at/IG5Dl', 'UV'); loadingbar();"
       >
-        <span class="filler">haha6767</span> Disc<span class="filler"
-          >haha6767</span
-        >ord
+        <span class="filler">f</span> Disc<span class="filler">f</span>ord
       </div>
     </div>
+    <div id="loader"><div id="bar"></div></div>
   </body>
   <script type="module" src="assets/js/navFunctions.js"></script>
 </html>

@@ -5,6 +5,7 @@ let tabNumber = 0;
 let activeTabId = null;
 let input = document.getElementById("rogoisdabest");
 
+
 function setActiveTab(tab) {
   document
     .querySelectorAll(".tab")
@@ -20,6 +21,7 @@ function setActiveTab(tab) {
   input.value = getOriginalUrl(iframe.src);
 }
 function newTab() {
+  
   tabNumber++;
   let tab = document.createElement("div");
   let divider = document.createElement("div");
@@ -62,7 +64,9 @@ function newTab() {
           setActiveTab(remainingTabs[remainingTabs.length - 1]);
       }
     });
+    
   });
+  
   tab.addEventListener("mousedown", (e) => {
     if (e.button === 1) {
       tab.style.animation = "closeTab 0.1s ";
@@ -88,6 +92,7 @@ function newTab() {
 newTab();
 
 function getOriginalUrl(url) {
+  
   if (!url) return "";
 
   if (url.includes("/scramjet/") && url.includes(location.origin)) {
@@ -113,6 +118,6 @@ function getOriginalUrl(url) {
     return decoded;
   }
   return url;
+  
 }
 const currentSiteUrl = window.location.origin;
-

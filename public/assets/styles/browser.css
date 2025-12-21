@@ -365,3 +365,13 @@ body {
   margin-right: 5px;
   filter: brightness(0.75);
 }
+  #loader {
+    height: 4px;
+    background: #222;
+  }
+  #bar {
+    height: 100%;
+    width: 0%;
+    background: #4caf50;
+    transition: width 0.3s;
+  }

@@ -19,8 +19,8 @@ const publicDir = path.join(__dirname, "..", "public");
 const PORT = process.env.PORT || 4040;
 const HOST = process.env.HOST || "0.0.0.0";
 const NODE_ENV = process.env.NODE_ENV || "production";
-const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
-const DAILY_LINK_CONFIG_PATH = process.env.DAILY_LINK_CONFIG_PATH;
+const webhookUrl = process.env.webhookthing;
+const dailyLink = process.env.dailyLink;
 
 const fastify = Fastify({
   trustProxy: true,
@@ -51,15 +51,15 @@ fastify.get("/", (req, reply) => {
 });
 
 fastify.get("/api/daily-link", (req, reply) => {
-  if (!DAILY_LINK_CONFIG_PATH) {
-    fastify.log.error("DAILY_LINK_CONFIG_PATH is not set in environment.");
+  if (!dailyLink) {
+    fastify.log.error("dailyLink is not set in environment.");
     return reply
       .code(500)
       .send({ error: "Server link configuration missing." });
   }
 
   try {
-    const filePath = path.join(__dirname, "..", DAILY_LINK_CONFIG_PATH);
+    const filePath = path.join(__dirname, "..", dailyLink);
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const data = JSON.parse(fileContent);
     let linkData = Array.isArray(data) && data.length > 0 ? data[0] : data;

@@ -139,7 +139,23 @@ function AddShortcut() {
   bookmarks.appendChild(bookmark);
   BookmarkShow("Bookmark made! Right click it to remove")
 }
+function loadingbar(){
+        const bar = document.getElementById("bar");
+      let progress = 0;
+      const fakeLoad = setInterval(() => {
+        if (progress < 90) {
+          progress += Math.random() * 8;
+          bar.style.width = progress + "%";
+        }
+      }, 200);
 
+      iframe.addEventListener("load", () => {
+        clearInterval(fakeLoad);
+        bar.style.width = "100%";
+        setTimeout(() => bar.style.width = "0%", 300);
+        progress = 0;
+      });
+}
 window.onload = () => {
   const bookmarks = document.getElementById("bookmarks");
   const count = localStorage.getItem("shortcutNumber") || 0;
@@ -155,6 +171,7 @@ window.onload = () => {
     bookmark.textContent = name;
 
     bookmark.onclick = () => {
+loadingbar()
       input.value = url;
       input.dispatchEvent(
         new KeyboardEvent("keyup", { key: "Enter", keyCode: 13, bubbles: true })
