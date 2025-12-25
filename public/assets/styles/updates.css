@@ -34,8 +34,9 @@ h2 {
   font-family: gravity;
 }
 pre {
-  font-family: fabrica;
   font-size: 13px;
+  line-height: 25px;
+  font-family: fabrica;
 }
 .updateInfo {
 width: 100%;

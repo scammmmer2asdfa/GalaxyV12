@@ -19,9 +19,9 @@ function launchApp() {
     openApp(appURL, "UV");
     frame.style.zIndex = "1";
   } else if (appURL == "xz") {
-    let appURLx = "https://" + firstThree + ".ip.nowgg.fun/apps/a/19900/b.html"
+    let appURLx = "https://" + firstThree + ".ip.nowgg.ing/apps/a/19900/b.html"
     console.log(appURLx)
-    openApp(appURLx, "SJ");
+    openApp(appURLx, "UV");
     frame.style.zIndex = "1";
   }
           const iframe = document.getElementById("frame");

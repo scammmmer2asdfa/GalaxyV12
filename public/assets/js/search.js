@@ -6,12 +6,10 @@ import {
   proxyUV,
 } from "../../lithium.mjs";
 import("../../glass/glassJS.config.js");
-// holy shit this file is so messy
 
 let iframe;
-let protocol = location.protocol === "https:" ? "wss://" : "ws://";
-let host = location.host;
 let transportx;
+let activeWisp;
 const bar = document.getElementById("bar");
 let progress = 0;
 
@@ -23,12 +21,72 @@ if (localStorage.getItem("transportType") == null) {
 }
 setTransport(transportx);
 console.log(transportx);
-setWisp(`${protocol}${host}/wisp/`);
+
+async function connectWisp() {
+  const primaryAddr = "ws://5.188.124.60:8080/";
+  const protocol = location.protocol === "https:" ? "wss://" : "ws://";
+  const host = location.host;
+  const fallbackAddr = `${protocol}${host}/wisp/`;
+
+  const checkWisp = (url, timeout = 100) => {
+    return new Promise((resolve) => {
+      try {
+        const socket = new WebSocket(url);
+        const timer = setTimeout(() => {
+          socket.close();
+          resolve(false);
+        }, timeout);
+
+        socket.onopen = () => {
+          clearTimeout(timer);
+          socket.close();
+          resolve(true);
+        };
+
+        socket.onerror = () => {
+          clearTimeout(timer);
+          resolve(false);
+        };
+      } catch (e) {
+        resolve(false);
+      }
+    });
+  };
+  const checkkk = await checkWisp(primaryAddr);
+  if (checkkk) {
+    console.log(
+      `%c connected using primary: (${primaryAddr})`,
+      "color: #00ff00; font-weight: bold;"
+    );
+    setWisp(primaryAddr);
+  } else {
+    console.warn(
+      `%c connected using fallback: (${fallbackAddr})`,
+      "color: #ff9900; font-weight: bold;"
+    );
+    setWisp(fallbackAddr);
+  }
+}
+function updatewisp() {
+  activeWisp = localStorage.getItem("wisp");
+  console.log("Checking WISP");
+  if (activeWisp == null || activeWisp == "default") {
+    connectWisp();
+  } else {
+    console.log(
+      `%c connected using custom: (${activeWisp})`,
+      "color: #00ff00; font-weight: bold;"
+    );
+
+    setWisp(activeWisp);
+  }
+}
+updatewisp();
 const uvList = ["https://discord.com"];
 document.addEventListener("keyup", async (e) => {
   if (e.key === "Enter" || e.keyCode === 13) {
-        setTimeout(() => (bar.style.width = "0%"), 300);
-        progress = 0;
+    setTimeout(() => (bar.style.width = "0%"), 300);
+    progress = 0;
 
     let tabNumber = activeTabId.replace("tab", "");
     iframe = document.getElementById("frame" + tabNumber);
@@ -160,3 +218,4 @@ function bugReports() {
   iframe.src = "/report.html";
 }
 window.bugReports = bugReports;
+window.updatewisp = updatewisp;

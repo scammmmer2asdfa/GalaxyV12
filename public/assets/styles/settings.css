@@ -260,7 +260,7 @@ button:hover {
   color: #ffffff;
   transform: translateX(-3px);
 }
-#nameInput {
+.inputStuff {
   background: rgba(255, 255, 255, 0.05); /* translucent */
   backdrop-filter: blur(10px); /* frosted glass effect */
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -272,10 +272,10 @@ button:hover {
   transition: all 0.3s ease;
 }
 
-#nameInput::placeholder {
+.inputStuff::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
-#nameInput:focus {
+.inputStuff:focus {
   box-shadow: 0 0 10px rgba(119, 119, 119, 0.5);
   background: rgba(65, 65, 65, 0.322); /* translucent hover */
   color: #ffffff;

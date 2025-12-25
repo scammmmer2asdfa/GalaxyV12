@@ -8,7 +8,6 @@ import path from "node:path";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import dotenv from "dotenv";
-import fs from "fs";
 
 dotenv.config();
 
@@ -18,9 +17,8 @@ const publicDir = path.join(__dirname, "..", "public");
 
 const PORT = process.env.PORT || 4040;
 const HOST = process.env.HOST || "0.0.0.0";
-const NODE_ENV = process.env.NODE_ENV || "production";
-const webhookUrl = process.env.webhookthing;
-const dailyLink = process.env.dailyLink;
+const env = process.env.env || "production";
+const dscWebhook = process.env.webhookthing;
 
 const fastify = Fastify({
   trustProxy: true,
@@ -36,7 +34,7 @@ const fastify = Fastify({
         else socket.end();
       });
   },
-  logger: NODE_ENV === "development",
+  logger: env === "development",
 });
 
 
@@ -48,33 +46,6 @@ fastify.register(fastifyStatic, {
 
 fastify.get("/", (req, reply) => {
   return reply.sendFile("index.html", publicDir);
-});
-
-fastify.get("/api/daily-link", (req, reply) => {
-  if (!dailyLink) {
-    fastify.log.error("dailyLink is not set in environment.");
-    return reply
-      .code(500)
-      .send({ error: "Server link configuration missing." });
-  }
-
-  try {
-    const filePath = path.join(__dirname, "..", dailyLink);
-    const fileContent = fs.readFileSync(filePath, "utf-8");
-    const data = JSON.parse(fileContent);
-    let linkData = Array.isArray(data) && data.length > 0 ? data[0] : data;
-    const dailyUrl = linkData.url;
-
-    if (!dailyUrl) {
-      return reply
-        .code(500)
-        .send({ error: "Link data found, but URL is missing." });
-    }
-    return reply.send({ url: dailyUrl });
-  } catch (error) {
-    fastify.log.error("Error fetching daily link configuration:", error);
-    return reply.code(500).send({ error: "Failed to retrieve daily link." });
-  }
 });
 
 fastify.get("/favicon-proxy", async (req, reply) => {
@@ -167,7 +138,7 @@ fastify.listen({ port: PORT, host: HOST }, (err) => {
   }
 
   const address = fastify.server.address();
-  console.log(`Server running in ${NODE_ENV} mode`);
+  console.log(`Server running in ${env} mode`);
   console.log(`Listening on:`);
   console.log(`\thttp://localhost:${address.port}`);
   console.log(`\thttp://${hostname()}:${address.port}`);
@@ -181,7 +152,7 @@ fastify.listen({ port: PORT, host: HOST }, (err) => {
 fastify.post("/report-bug", async (req, reply) => {
   const { name, bug, url, ip } = req.body;
   try {
-    const response = await fetch(webhookUrl, {
+    const response = await fetch(dscWebhook, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

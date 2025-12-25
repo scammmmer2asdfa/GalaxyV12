@@ -156,7 +156,12 @@
           <h2 class="blockTitle">Change your name</h2>
           <p class="desc">uhh pretty straighforward</p>
           <div>
-            <input type="text" id="nameInput" placeholder="Enter your name" />
+            <input
+              type="text"
+              id="nameInput"
+              class="inputStuff"
+              placeholder="Enter your name"
+            />
           </div>
         </div>
         <div class="block">
@@ -341,6 +346,39 @@
             </button>
           </div>
         </div>
+        <div class="block">
+          <h2 class="blockTitle">Wi<span class="filler">haha6767</span>sp</h2>
+          <p class="desc">
+            Change the server that w<span class="filler">haha6767</span>isp uses
+            to con<span class="filler">haha6767</span>nect to the inte<span
+              class="filler"
+              >haha6767</span
+            >rnet. This is useful if you are experie<span class="filler"
+              >haha6767</span
+            >ncing issues with the default ser<span class="filler"
+              >haha6767</span
+            >ver.
+            <br /><br>
+            <span style="color: rgb(218, 135, 28)"
+              >*This setting requires reload for changes to apply.</span
+            >
+          </p>
+
+          <div>
+            <input
+              type="text"
+              class="inputStuff"
+              id="wispInput"
+              placeholder="Change here..."
+            />
+            <button
+              onclick="loadingShow('Reset'); localStorage.setItem('wisp', 'default')"
+              style="margin-left: 15px"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
 
         <div class="block">
           <h2 class="blockTitle">Change Search Engine</h2>
@@ -369,17 +407,16 @@
     <div class="about" id="about">
       <h1 class="cloak">About Galaxy</h1>
       <div class="blocks">
-
-      <div class="block">
-        <h2 class="blockTitle">Made by Rogo :)</h2>
-        <p class="arial">(ik it's so tuff right)</p>
-        <button onclick="copy('https://github.com/Galaxy-Vortex/GalaxyV6')">
-          Git<span class="filler">haha6767</span>hub
-        </button>
-        <button onclick="copy('https://tinyurl.com/sdfsdf2ghfdgv')">
-          Dis<span class="filler">haha6767</span>cord
-        </button>
-      </div>
+        <div class="block">
+          <h2 class="blockTitle">Made by Rogo :)</h2>
+          <p class="arial">(ik it's so tuff right)</p>
+          <button onclick="copy('https://github.com/Galaxy-Vortex/GalaxyV6')">
+            Git<span class="filler">haha6767</span>hub
+          </button>
+          <button onclick="copy('https://tinyurl.com/sdfsdf2ghfdgv')">
+            Dis<span class="filler">haha6767</span>cord
+          </button>
+        </div>
       </div>
     </div>
   </body>

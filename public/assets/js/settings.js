@@ -1,4 +1,4 @@
-const currentSiteUrl = window.location.origin ;
+const currentSiteUrl = window.location.origin;
 function launchBlob() {
   const htmlContent = `
     <html>
@@ -111,6 +111,7 @@ function updateName() {
 }
 
 updateName();
+
 let backgroundURL = localStorage.getItem("backgroundURL");
 
 function setDefaultBackground(url) {
@@ -198,8 +199,6 @@ function loadGlassmorphismState() {
 }
 window.addEventListener("load", loadGlassmorphismState);
 
-
-
 function antiClose() {
   if (antiCloseButton.checked) {
     window.addEventListener("beforeunload", function (event) {
@@ -250,7 +249,6 @@ function loadingShow(text) {
   });
 
   document.body.appendChild(loadingNotice);
-  console.log("Final URL:", input.value);
 }
 function loadingHide() {
   loadingNotice.style.animation = "noticeHide 0.4s ease 1s forwards";
@@ -267,3 +265,15 @@ function copy(URLLink) {
       console.error("Failed to copy: ", err);
     });
 }
+function updateWisp() {
+  const wispInput = document.getElementById("wispInput");
+
+  wispInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      localStorage.setItem("wisp", wispInput.value);
+      console.log("Wisp saved:", wispInput.value);
+      loadingShow("Wisp updated!");
+    }
+  });
+}
+updateWisp()

@@ -56,4 +56,5 @@
 .filler {
   position: absolute;
   opacity: 0;
+  font-size: 0.1px;
 }
