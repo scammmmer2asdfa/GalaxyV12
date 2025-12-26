@@ -23,7 +23,7 @@ setTransport(transportx);
 console.log(transportx);
 
 async function connectWisp() {
-  const primaryAddr = "ws://5.188.124.60:8080/";
+  const primaryAddr = "wss://wisp.galxy.autos/";
   const protocol = location.protocol === "https:" ? "wss://" : "ws://";
   const host = location.host;
   const fallbackAddr = `${protocol}${host}/wisp/`;
