@@ -33,7 +33,7 @@
   const form = document.getElementById("bugForm");
   const submitBtn = document.getElementById("submitBtn");
 
-  const SECRET_KEY = "GalaxySuperSecretKey";
+  const supersecrectgalaxykey = "GalaxySuperSecretKey";
 
 
   async function getIpAddress() {
@@ -79,7 +79,7 @@
           "You are banned for submitting 3 or more troll reports. You may appeal at https://tinyurl.com/galaxyiscool";
         document.getElementById("sent").innerText = "";
       } else {
-        const encryptedIP = customSecureEncode(ipAdress, SECRET_KEY);
+        const encryptedIP = customSecureEncode(ipAdress, supersecrectgalaxykey);
         const response = await fetch("/report-bug", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

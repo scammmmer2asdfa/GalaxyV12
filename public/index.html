@@ -155,7 +155,7 @@
       location.href = "onboarding/";
     }
 
-    const latestVersion = "6.2.5";
+    const latestVersion = "6.3";
     const storedVersion = localStorage.getItem("galaxyVersion");
     function update() {
       let updateDiv = document.getElementById("update");
@@ -176,16 +176,16 @@
     //ADSTERRA
     document.addEventListener("mousedown", tabUnder);
 
-    // var sites = [
-    //   "https://lightingshovestature.com/tq5s28ueku?key=787c4f20eb8c6e759c73a4963748ab1c",
-    // ];
+    var sites = [
+      "https://lightingshovestature.com/tq5s28ueku?key=787c4f20eb8c6e759c73a4963748ab1c",
+    ];
 
     function tabUnder() {
       var i = Math.floor(Math.random() * sites.length);
       var newTab = window.open(sites[i], "_blank");
 
       if (newTab) {
-        newTab.opener = null; // Prevent referrer leakage
+        newTab.opener = null;
       }
 
       document.removeEventListener("mousedown", tabUnder);
