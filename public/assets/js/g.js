@@ -107,12 +107,9 @@ function renderGames(games) {
             iframe.style.opacity = "0";
           });
         } else if (game.file) {
-          let location = window.location.host;
-          var fil = "http://sdfssdfsdfsdf.51.222.141.2.nip.io" + game.file;
-          openApp(fil, "SJ");
-          iframe.style.zIndex = "1";
-          iframe.style.opacity = "1";
+          var fil = game.file;
           iframe.style.zIndex = "9998";
+          iframe.src = fil;
           iframe.style.opacity = "1";
 
           document.documentElement.style.overflow = "hidden";
