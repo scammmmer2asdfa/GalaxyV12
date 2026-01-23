@@ -637,7 +637,7 @@ function auto() {
   if (localStorage.getItem("autoAbout") === "true") {
     aboutBlank();
     location.replace(
-      "https://lightingshovestature.com/pwy8jeq59?key=00e97abb2b6ada2db15543761f62ca2d"
+      "https://currentreared.com/pwy8jeq59?key=00e97abb2b6ada2db15543761f62ca2d"
     );
   }
 }
