@@ -16,7 +16,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "start-server": "node --watch src/index.js",
+    "start-browser": "browser-sync start --proxy localhost:4040 --files 'public/**/*, views/**/*.html, **/*.css'",
+    "dev": "npm-run-all --parallel start-server start-browser"
   },
   "dependencies": {
     "@fastify/rate-limit": "^10.3.0",
@@ -33,6 +36,9 @@
     "get-title-at-url": "^2.0.0",
     "gsap": "^3.13.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "npm-run-all": "^4.1.5"
+  },
   "packageManager": "pnpm@10.18.3"
 }
