@@ -1,5 +1,5 @@
 :root {
-  --backgroundURL: url("../img/black.jpg");
+  --backgroundURL: url("/assets/img/black.jpg");
 }
 
 body {

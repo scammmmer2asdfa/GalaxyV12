@@ -324,7 +324,7 @@ function setDefaultBackground(url) {
   );
 }
 if (backgroundURL == null) {
-  localStorage.setItem("backgroundURL", "../img/bg3.png");
+  localStorage.setItem("backgroundURL", "/assets/img/bg3.png");
 }
 
 const dbName = "WebsiteSettingsDB";
@@ -380,5 +380,5 @@ if (uploadDiv && fileInput) {
 
 function ghost3() {
   localStorage.setItem("onboarding", "");
-  window.location.href = "../";
+  window.location.href = "/";
 }

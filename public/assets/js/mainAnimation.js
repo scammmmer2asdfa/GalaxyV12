@@ -4,7 +4,7 @@ const dbName = "WebsiteSettingsDB";
 const storeName = "backgrounds";
 const KEY = "userBackground";
 if (backgroundURL == null) {
-  localStorage.setItem("backgroundURL", "../img/bg3.png");
+  localStorage.setItem("backgroundURL", "/assets/img/bg3.png");
   backgroundURL = localStorage.getItem("backgroundURL");
 }
 async function useStore(mode, cb) {

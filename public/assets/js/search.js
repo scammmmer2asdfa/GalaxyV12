@@ -4,8 +4,8 @@ import {
   makeURL,
   proxySJ,
   proxyUV,
-} from "../../lithium.mjs";
-import("../../glass/glassJS.config.js");
+} from "/lithium.mjs";
+import("/glass/glassJS.config.js");
 console.log("search.js loaded");
 let iframe;
 let transportx;

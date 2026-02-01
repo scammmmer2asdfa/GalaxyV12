@@ -39,7 +39,7 @@ function newTab() {
   tab.className = "tab";
   tab.id = "tab" + tabCount;
   tab.innerHTML = `
-    <img src="../assets/img/icons/browser.png" alt="" class="favicon">
+    <img src="/assets/img/icons/browser.png" alt="" class="favicon">
     <p class="tabName">New Tab</p>
     <p class="close">&#xEF2C</p>`;
 
