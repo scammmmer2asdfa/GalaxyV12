@@ -620,7 +620,6 @@ function imacEffect() {
     const delta = icon._targetScale - icon._scale;
     icon._scale += delta * stiffness;
     
-    // Applying the transformation
     icon.style.transform = `scale(${icon._scale})`;
   });
 }updateTime();
@@ -648,7 +647,6 @@ const menu = document.getElementById("options");
 let counter = 0;
 let mouseXpos = null;
 
-// --- Existing UI Logic ---
 document.addEventListener("mousemove", (event) => {
   mouseXpos = event.clientX;
   if (counter == 0) {
