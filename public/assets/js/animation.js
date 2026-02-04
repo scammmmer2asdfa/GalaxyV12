@@ -380,5 +380,6 @@ if (uploadDiv && fileInput) {
 
 function ghost3() {
   localStorage.setItem("onboarding", "");
+  localStorage.setItem("galaxyVersion", 0);
   window.location.href = "/";
 }
