@@ -495,7 +495,7 @@ function openWindow(
     });
   }
 }
-const currentSiteUrl = window.location.href + "x.html";
+const currentSiteUrl = window.location.hostname + "x.html";
 function launchBlob() {
   const htmlContent = `
     <html>
