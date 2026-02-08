@@ -26,7 +26,7 @@ async function connectWisp() {
   const protocol = location.protocol === "https:" ? "wss://" : "ws://";
   const host = location.host;
   const fallbackAddr = `${protocol}${host}/wisp/`;
-  const primaryAddr = fallbackAddr;
+  const primaryAddr = "wss://galxy.autos/wisp/";
 
   const checkWisp = (url, timeout = 100) => {
     return new Promise((resolve) => {
