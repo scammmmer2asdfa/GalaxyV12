@@ -1,232 +1,84 @@
 <!doctype html>
 <html lang="en">
-  <!--TEST-->
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Classroom</title>
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="https://ssl.gstatic.com/classroom/favicon.png"
-    />
-    <link rel="stylesheet" href="assets/styles/assets.css" />
-    <link rel="stylesheet" href="assets/styles/style.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-    />
-    <script src="/assets/js/gsap.js"></script>
-    <script defer src="assets/js/mainAnimation.js"></script>
-    <script defer src="assets/js/auto.js"></script>
-    <script type="module" defer src="assets/js/search.js"></script>
-    <meta name="admaven-placement" content="Bqjw5qTs5" />
-  </head>
-  <!-- Google tag (gtag.js) -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-T9C6WKFHGD"
-  ></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-T9C6WKFHGD");
-  </script>
-  <body>
-    <div class="update" id="update">
-      <h1>It looks like you're using an outdated version of Galaxy...</h1>
-      <h2>Update it by doing `Ctrl + Shift + R`</h2>
-    </div>
-    <div class="topNav">
-      <p
-        class="nameVer"
-        onclick="openWindow('left', 'updates.html', '0%', '35px', '60%', '26%')"
-      >
-        Gala<span class="filler">h</span>xyV6
-      </p>
-      <p class="verticalDivider">|</p>
-      <p class="userName"></p>
-      <div class="middle">
-        <p></p>
-      </div>
-      <div class="right">
-        <div
-          class="bugReport"
-          onclick="openWindow('right', 'link.html', '0%', '35px', '40%', '20%')"
-        >
-          <img
-            title="Bug Report"
-            src="assets/img/icons/link.png"
-            class="report"
-          />
-        </div>
-        <div
-          class="bugReport"
-          onclick="
-            openWindow('right', 'report.html', '0%', '35px', '40%', '20%')
-          "
-        >
-          <img
-            title="Bug Report"
-            src="assets/img/icons/bug-report.png"
-            class="report"
-          />
-        </div>
-
-        <div id="timeDisplay" class="timeDisplay"></div>
-      </div>
-    </div>
-    <div id="appModal" class="modal-overlay">
-      <div class="modal-content" id="modal-content">
-        <h2>Add New App</h2>
-        <input type="text" id="appName" placeholder="App Name" />
-        <input type="text" id="appIcon" placeholder="Icon URL (optional)" />
-        <input
-          type="text"
-          id="appUrl"
-          placeholder="App URL (e.g., https://...)"
-        />
-        <div class="modal-actions">
-          <button onclick="closeModal()">Cancel</button>
-          <button class="primary" onclick="submitApp()">Create App</button>
-        </div>
-      </div>
-    </div>
-    <div class="options" id="options">
-      <div id="menuOptions" onclick="showApp()"><p>Add App</p></div>
-    </div>
-    <div class="nav" id="nav">
-      <div class="navItems navStagger" onclick="openWindow('', 'p.html')">
-        <img title="Browser" src="assets/img/icons/browser.png" class="icons" />
-      </div>
-      <div
-        class="navItems navStagger"
-        onclick="
-          openWindow(
-            '',
-            'g/index.html',
-            '0%',
-            '0%',
-            'calc(100% - 51px)',
-            '99.999%',
-          )
-        "
-      >
-        <img
-          title="Games"
-          src="assets/img/icons/controller.png"
-          class="icons"
-        />
-      </div>
-      <div
-        class="navItems navStagger"
-        onclick="
-          openWindow(
-            '',
-            'a/index.html',
-            '0%',
-            '0%',
-            'calc(100% - 51px)',
-            '99.999%',
-          )
-        "
-      >
-        <img title="Apps" src="assets/img/icons/apps.png" class="icons" />
-      </div>
-      <div
-        class="navItems navStagger"
-        onclick="
-          openWindow('', '/scramjet/https%3A%2F%2Ftinyurl.com%2Fsd2fsdvxc34w')
-        "
-      >
-        <img title="GeForce" src="assets/img/icons/nvidia.png" class="icons" />
-      </div>
-      <div
-        class="navItems navStagger"
-        onclick="
-          openWindow('', 'app.html', '', '', '', '');
-          localStorage.setItem('storeAppURL', 'xz');
-          localStorage.setItem('tempProxy', 'UV');
-        "
-      >
-        <img title="Roblox" src="assets/img/icons/boblox.png" class="icons" />
-      </div>
-
-      <div
-        class="navItems navStagger"
-        onclick="
-          openWindow('', 'app.html', '', '', '', '');
-          localStorage.setItem('storeAppURL', 'https://shorturl.at/IG5Dl');
-          localStorage.setItem('tempProxy', 'UV');
-        "
-      >
-        <img title="Discord" src="assets/img/icons/discord.png" class="icons" />
-      </div>
-      <div
-        class="navItems navStagger"
-        onclick="
-          openWindow(
-            '',
-            'settings/index.html',
-            '0',
-            '0',
-            'calc(100% - 51px)',
-            '99.999%',
-          )
-        "
-      >
-        <img
-          title="Settings"
-          src="assets/img/icons/settings.png"
-          class="icons"
-        />
-      </div>
-      <div id="minimizedContainer"></div>
-    </div>
-    <div id="snap-left" class="snap-preview"></div>
-    <div id="snap-right" class="snap-preview"></div>
-
-    <div class="myButton"></div>
-  </body>
-  <script src="assets/js/mainAnimation.js"></script>
-
-  <script>
-    if (localStorage.getItem("onboarding") == null) {
-      location.href = "onboarding/";
-    }
-
-    /*ADSTERRA*/
-    document.addEventListener("mousedown", tabUnder);
-
-    var sites = [
-      "https://anniversaryvacuumambassador.com/ks6hha6w7?key=acf72060a3a705c86e0f1aeac193db56",
-      "https://anniversaryvacuumambassador.com/b7jvym04?key=98538a4c146f902ffa264961d25d64c7",
-      "https://anniversaryvacuumambassador.com/cexg5kdqw?key=0a4b89e9d2d9cc5977e0b8eae6121f6d",
-      "https://anniversaryvacuumambassador.com/y6xfxytk?key=1387c27c7632bfd401f63e698c7778ba",
-      "https://anniversaryvacuumambassador.com/dhsdhsdm2y?key=c9e7ed050502b2781f51c00c46ce9675",
-      "https://anniversaryvacuumambassador.com/gzia6eh3?key=e82272f015757c72a4fa78508baa3c9f", 
-      "https://anniversaryvacuumambassador.com/rpcghdc1?key=467d3e6001045bfb8860f44a30d2d18c",
-      "https://anniversaryvacuumambassador.com/jrchbtdrzs?key=72455f977f1a81eb35ed3ec2f829c0c9"
-    ];
-
-    function tabUnder() {
-      var i = Math.floor(Math.random() * sites.length);
-      var newTab = window.open(sites[i], "_blank");
-
-      if (newTab) {
-        newTab.opener = null;
+    <title></title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        color: #000000;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        line-height: 1.5;
       }
 
-      document.removeEventListener("mousedown", tabUnder);
-    }
+      .container {
+        max-width: 720px;
+        margin: 15vh auto;
+        padding: 0 24px;
+      }
 
-    document.getElementById("myButton").addEventListener("click", tabUnder);
-    checkVersion();
+      h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
 
-  </script>
+      h2 {
+        font-size: 1rem;
+        font-weight: 400;
+        margin: 0.5rem 0;
+      }
+
+      a {
+        color: #000000;
+        text-decoration: underline;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      .links a {
+        display: block;
+        margin: 0.25rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Galaxy is upgrading to a faster server</h1>
+
+      <h4>
+        If you are seeing this message, the link you are using no longer works.
+      </h4>
+      <h3>
+        Join the <a href="https://shorturl.at/OdcXZ">DC</a> server for more links
+      </h3>
+
+      <h2>Here are some alternatives:</h2>
+      <div class="links">
+        <a href="https://call.it.smasesorias.cl">call.it.smasesorias.cl</a>
+        <a href="https://galaxy.tcloud.my">galaxy.tcloud.my</a>
+        <a href="https://login.ilsatimisoara.ro">login.ilsatimisoara.ro</a>
+        <a href="https://engine.tomaszu.com">engine.tomaszu.com</a>
+        <a href="https://projects.wanhuiarchitect.com">projects.wanhuiarchitect.com</a>
+        <a href="https://tracks.empleosonora.gob.mx">tracks.empleosonora.gob.mx</a>
+        <a href="https://tickets.flightbooker.co.za">tickets.flightbooker.co.za</a>
+        <a href="https://water.heatmypool.com">water.heatmypool.com</a>
+        <a href="https://policies.osiadaczabogados.cl">policies.osiadaczabogados.cl</a>
+        <a href="https://crops.primeflk.ch">crops.primeflk.ch</a>
+        <a href="https://camel.stjameskilolo.org">camel.stjameskilolo.org</a>
+        <a href="https://notes.keybusinessconnection.com">notes.keybusinessconnection.com</a>
+        <a href="https://healthcare.emedicalrecs.com">healthcare.emedicalrecs.com</a>
+      </div>
+
+    </div>
+  </body>
 </html>
