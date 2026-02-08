@@ -1,10 +1,4 @@
-import {
-  setTransport,
-  setWisp,
-  makeURL,
-  proxySJ,
-  proxyUV,
-} from "/lithium.mjs";
+import { setTransport, setWisp, makeURL, proxySJ, proxyUV } from "/lithium.mjs";
 import("/glass/glassJS.config.js");
 console.log("search.js loaded");
 let iframe;
@@ -21,67 +15,10 @@ if (localStorage.getItem("transportType") == null) {
 }
 setTransport(transportx);
 console.log(transportx);
-
-async function connectWisp() {
-  const primaryAddr = "wss://wisp.galxy.autos/";
-  const protocol = location.protocol === "https:" ? "wss://" : "ws://";
-  const host = location.host;
-  const fallbackAddr = `${protocol}${host}/wisp/`;
-
-  const checkWisp = (url, timeout = 100) => {
-    return new Promise((resolve) => {
-      try {
-        const socket = new WebSocket(url);
-        const timer = setTimeout(() => {
-          socket.close();
-          resolve(false);
-        }, timeout);
-
-        socket.onopen = () => {
-          clearTimeout(timer);
-          socket.close();
-          resolve(true);
-        };
-
-        socket.onerror = () => {
-          clearTimeout(timer);
-          resolve(false);
-        };
-      } catch (e) {
-        resolve(false);
-      }
-    });
-  };
-  const checkkk = await checkWisp(primaryAddr);
-  if (checkkk) {
-    console.log(
-      `%c connected using primary: (${primaryAddr})`,
-      "color: #00ff00; font-weight: bold;"
-    );
-    setWisp(primaryAddr);
-  } else {
-    console.warn(
-      `%c connected using fallback: (${fallbackAddr})`,
-      "color: #ff9900; font-weight: bold;"
-    );
-    setWisp(fallbackAddr);
-  }
-}
-function updatewisp() {
-  activeWisp = localStorage.getItem("wisp");
-  console.log("Checking WISP");
-  if (activeWisp == null || activeWisp == "default") {
-    connectWisp();
-  } else {
-    console.log(
-      `%c connected using custom: (${activeWisp})`,
-      "color: #00ff00; font-weight: bold;"
-    );
-
-    setWisp(activeWisp);
-  }
-}
-updatewisp();
+const protocol = location.protocol === "https:" ? "wss://" : "ws://";
+const host = location.host;
+const fallbackAddr = `${protocol}${host}/wisp/`;
+setWisp(fallbackAddr);
 const uvList = ["https://discord.com"];
 document.addEventListener("keyup", async (e) => {
   if (e.key === "Enter" || e.keyCode === 13) {
@@ -170,7 +107,7 @@ document.addEventListener("keyup", async (e) => {
     } else if (proxyType === "UV") {
       updateIframeTitle();
       input.value = __uv$config.decodeUrl(
-        iframe.src.split(__uv$config.prefix)[1]
+        iframe.src.split(__uv$config.prefix)[1],
       );
     } else {
       input.value = getOriginalUrl(iframe.src);
@@ -181,7 +118,7 @@ document.addEventListener("keyup", async (e) => {
     let tabName = currentTab?.querySelector(".tabName");
     function updateIframeTitle() {
       iframe = document.getElementById(
-        "frame" + activeTabId.replace("tab", "")
+        "frame" + activeTabId.replace("tab", ""),
       );
       console.log("Updating title for iframe:", iframe.id);
       iframe.onload = () => {
