@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { hostname } from "node:os";
-import { server as wisp } from "@mercuryworkshop/wisp-js/server";
+import { server as wisp, logging } from "@mercuryworkshop/wisp-js/server";
 import Fastify from "fastify";
 import fastifyStatic from "@fastify/static";
 import { fileURLToPath } from "node:url";
@@ -8,6 +8,7 @@ import path from "node:path";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import dotenv from "dotenv";
+logging.set_level(logging.NONE);
 
 dotenv.config();
 
