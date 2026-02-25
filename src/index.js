@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { hostname } from "node:os";
 import { server as wisp, logging } from "@mercuryworkshop/wisp-js/server";
@@ -20,7 +21,14 @@ const PORT = process.env.PORT || 4040;
 const HOST = process.env.HOST || "0.0.0.0";
 const env = process.env.env || "production";
 const dscWebhook = process.env.webhookthing;
-
+const blockedIpsPath = path.join(__dirname, "..", "blocked.json");
+let blockedIps = [];
+try {
+  const data = readFileSync(blockedIpsPath, "utf-8");
+  blockedIps = JSON.parse(data);
+} catch (err) {
+  console.error("Could not load blocked.json, continuing with empty list.");
+}
 const fastify = Fastify({
   trustProxy: true,
   serverFactory: (handler) => {
@@ -38,7 +46,11 @@ const fastify = Fastify({
   logger: env === "development",
 });
 
-
+fastify.addHook("onRequest", async (request, reply) => {
+  if (blockedIps.includes(request.ip)) {
+    reply.code(403).send({ error: "Access denied from this IP." });
+  }
+});
 fastify.register(fastifyStatic, {
   root: publicDir,
   prefix: "/",
