@@ -60,10 +60,7 @@ fastify.register(fastifyStatic, {
   prefix: "/",
   decorateReply: true,
 });
-fastify.get("/debug-ip", (req, reply) => {
-  return reply.send({ ip: req.ip, headers: req.headers });
-});
-t
+
 fastify.get("/", (req, reply) => {
   return reply.sendFile("index.html", publicDir);
 });
